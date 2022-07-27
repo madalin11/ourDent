@@ -8,17 +8,18 @@ import Treatments from './Treatments';
 import Staff from './Staff';
 import Feedback from './Feedback';
 import Users from './Users';
+import Chat from './Chat';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({navigation}) => {
     return (
         <Tab.Navigator  screenOptions={{ headerShown: false, tabBarInactiveBackgroundColor: 'white' }}  >
-            <Tab.Screen name="Home" component={AdminHome} options={{
+            <Tab.Screen name="Chat" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
                         <Image
-                            source={require('../Icons/home.png')}
+                            source={require('../iconsOurDent/chat.png')}
                             resizeMode='contain'
                             style={{
                                 width: 26,
@@ -34,7 +35,7 @@ const TabNavigator = ({navigation}) => {
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
                         <Image
-                            source={require('../Icons/home.png')}
+                            source={require('../iconsOurDent/treatment.png')}
                             resizeMode='contain'
                             style={{
                                 width: 26,
@@ -49,7 +50,7 @@ const TabNavigator = ({navigation}) => {
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
                         <Image
-                            source={require('../Icons/home.png')}
+                            source={require('../iconsOurDent/stafficon.png')}
                             resizeMode='contain'
                             style={{
                                 width: 26,
@@ -64,7 +65,7 @@ const TabNavigator = ({navigation}) => {
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
                         <Image
-                            source={require('../Icons/home.png')}
+                            source={require('../iconsOurDent/feedbackicon.png')}
                             resizeMode='contain'
                             style={{
                                 width: 26,
@@ -79,7 +80,7 @@ const TabNavigator = ({navigation}) => {
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
                         <Image
-                            source={require('../Icons/home.png')}
+                            source={require('../iconsOurDent/usersicon.png')}
                             resizeMode='contain'
                             style={{
                                 width: 26,
