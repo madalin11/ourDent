@@ -1,11 +1,27 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
-import SelectDropdown from 'react-native-select-dropdown'
+import SelectDropdown from 'react-native-select-dropdown';
+import DatePicker from 'react-native-date-picker'
 
 const UserAddTreatment = ({ navigation }) => {
     const countries = ["Alina Popa", "Ghibu Tiberiu"];
-    const defaultValue = "Medic"
+    const mounth = ["January",
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December']
+    const year = ['2022','2023','2024','2025'];
+    const day = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+    const defaultValue = "Medic";
+
     return (
         <View style={styles.container}>
             <LinearGradient
@@ -72,13 +88,43 @@ const UserAddTreatment = ({ navigation }) => {
                             console.log(selectedItem, index)
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
-                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15 }}
                     />
                 </View>
 
+                <View style={{ alignItems: 'center', alignSelf: 'center', flexDirection: 'row', marginTop: 5 }}>
+                    <SelectDropdown
+                        defaultButtonText='Day'
+                        data={day}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%' }}
+                    />
+                    <SelectDropdown
+                        defaultButtonText='Mounth'
+                        data={mounth}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%', marginRight: 5 }}
+                    />
+                    <SelectDropdown
+                        defaultButtonText='Year'
+                        data={year}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%', marginRight: 5 }}
+                    />
+
+                </View>
                 <View style={{
                     shadowColor: '#202020',
-                    shadowRadius:5,
+                    shadowRadius: 5,
                     shadowOffset: { height: 7 },
                     shadowOpacity: 1,
                 }}>
@@ -88,11 +134,11 @@ const UserAddTreatment = ({ navigation }) => {
                             borderRadius: 50,
                             alignItems: 'center',
                             marginHorizontal: 98,
-                            marginTop: 70,
+                            marginTop: 50,
                             paddingVertical: 5
                         }}>
                         <View style={{
-                            flexDirection: 'row', alignContent: 'center', 
+                            flexDirection: 'row', alignContent: 'center',
                         }}>
                             <Image
                                 style={{ width: 40, height: 40, marginLeft: 10, tintColor: 'rgba(255, 255, 255, 0.5)' }}
