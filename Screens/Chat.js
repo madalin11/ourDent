@@ -5,13 +5,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 
-const Chat = () => {
+const Chat = ({navigation}) => {
 
   const [textSearch, setTextSearch] = useState('')
   const [friends, setFriends] = useState([])
  
   const [friendsAdd, setFriendsAdd] = useState([])
-
+//check what kind of user is and set corespondent flag
+  const enterChat = ()=>{
+    navigation.navigate('Chat room screen', {
+      flag:false,
+    })
+  }
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -24,7 +29,7 @@ const Chat = () => {
         <Text style={{ fontSize: 40, textAlign: 'center', color: 'white', fontWeight: '500',fontFamily:'Times New Roman',shadowColor:'#202020',shadowOpacity:1,shadowOffset:{height:2} }}>
           Chat
         </Text>
-        <TouchableOpacity  style={{ alignSelf: 'flex-end', marginRight: 20, top: -23 }}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Login screen')} style={{ alignSelf: 'flex-end', marginRight: 20, top: -23 }}>
           <Image style={{ width: 20, height: 20 }} source={require('../Icons/newchat.png')}></Image>
         </TouchableOpacity>
       </View>
@@ -48,21 +53,15 @@ const Chat = () => {
 
 
       <ScrollView style={{ height: '100%' }}>
-        <TouchableOpacity>
-          <ConversationItem/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <ConversationItem/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <ConversationItem/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <ConversationItem/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <ConversationItem/>
-        </TouchableOpacity>
+
+          <ConversationItem enterChat={enterChat}/>
+          <ConversationItem enterChat={enterChat}/>
+          <ConversationItem enterChat={enterChat}/>
+          <ConversationItem enterChat={enterChat}/>
+          <ConversationItem enterChat={enterChat}/>
+          <ConversationItem enterChat={enterChat}/>
+          <ConversationItem enterChat={enterChat}/>
+        
         
       </ScrollView>
 

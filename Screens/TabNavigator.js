@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({navigation}) => {
     return (
-        <Tab.Navigator  screenOptions={{ headerShown: false, tabBarInactiveBackgroundColor: 'white' }}  >
+        <Tab.Navigator screenOptions={{ tabBarStyle:{backgroundColor:'rgba(0, 255, 0, 0.1)' } ,headerShown: false }}  >
             <Tab.Screen name="Chat" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>

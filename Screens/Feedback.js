@@ -1,12 +1,12 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View,TextInput,Keyboard,Image } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
 import React from 'react'
 import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackItem from '../components/FeedbackItem';
 
-const Feedback = ({navigation}) => {
+const Feedback = ({ navigation }) => {
 
-  const enterFeedback = () =>{
+  const enterFeedback = () => {
     navigation.navigate('Feedback details screen');
   }
 
@@ -38,28 +38,21 @@ const Feedback = ({navigation}) => {
 
       </View>
       <ScrollView style={{ height: '100%' }}>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem enterFeedback={enterFeedback}/>
-        </TouchableOpacity>
-        
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
+        <FeedbackItem enterFeedback={enterFeedback} />
+
 
 
 

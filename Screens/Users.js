@@ -1,12 +1,12 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View,TextInput,Keyboard,Image } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
 import React from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
 
-const Users = ({navigation}) => {
+const Users = ({ navigation }) => {
 
-  const enterUserDetails = ()=>{
+  const enterUserDetails = () => {
     navigation.navigate('User details screen');
   }
 
@@ -38,30 +38,20 @@ const Users = ({navigation}) => {
 
       </View>
       <ScrollView style={{ height: '100%' }}>
-        <TouchableOpacity>
-          <StaffItem enterStaffDetails={enterUserDetails}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <StaffItem />
-        </TouchableOpacity>
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
+
+        <StaffItem enterStaffDetails={enterUserDetails} />
 
 
 

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const TreatmentItem = ({enterTreatmentDetails}) => {
+
+const UserTreatmentItem = ({enterTreatmentDetails}) => {
     return (
         <TouchableOpacity onPress={()=>enterTreatmentDetails()}>
             <View style={styles.container}>
@@ -16,12 +17,7 @@ const TreatmentItem = ({enterTreatmentDetails}) => {
             </Text>
             </View>
             
-            <TouchableOpacity>
-                <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50 }}
-                    source={require('../iconsOurDent/trash.png')}
-                />
-            </TouchableOpacity>
+           
 
         </View>
         </TouchableOpacity>
@@ -29,7 +25,7 @@ const TreatmentItem = ({enterTreatmentDetails}) => {
     )
 }
 
-export default TreatmentItem
+export default UserTreatmentItem
 
 const styles = StyleSheet.create({
     container: {

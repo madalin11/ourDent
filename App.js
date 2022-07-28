@@ -11,6 +11,12 @@ import TabNavigator from './Screens/TabNavigator';
 import FeedbackDetails from './Screens/FeedbackDetails';
 import StaffDetails from './Screens/StaffDetails';
 import UserDetails from './Screens/UserDetails';
+import TreatmentDetails from './Screens/TreatmentDetails';
+import ChatRoom from './Screens/ChatRoom';
+import AddTreatment from './Screens/AddTreatment';
+import UserHome from './Screens/UserHome';
+import UserTreatment from './Screens/UserTreatment';
+import UserAddTreatment from './Screens/UserAddTreatment';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -24,7 +30,12 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="Feedback details screen" component={FeedbackDetails} />
         <Stack.Screen options={{ headerShown: false }} name="Staff details screen" component={StaffDetails} />
         <Stack.Screen options={{ headerShown: false }} name="User details screen" component={UserDetails} />
- 
+        <Stack.Screen options={{ headerShown: false }} name="Treatment details screen" component={TreatmentDetails} />
+        <Stack.Screen options={{ headerShown: false }} name="Chat room screen" component={ChatRoom} />
+        <Stack.Screen options={{ headerShown: false }} name="Add treatment screen" component={AddTreatment} />
+        <Stack.Screen options={{ headerShown: false }} name="User home screen" component={UserHome} />
+        <Stack.Screen options={{ headerShown: false }} name="User add treatment screen" component={UserAddTreatment} />
+        
         </Stack.Navigator>
     </NavigationContainer>
   );

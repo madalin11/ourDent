@@ -2,12 +2,13 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image,
 import React from 'react'
 import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
+import UserTreatmentItem from '../components/UserTreatmentItem';
 
 
-const Treatments = ({ navigation }) => {
+const UserTreatment = ({ navigation }) => {
 
     const enterTreatmentDetails = () => {
-        navigation.navigate('Treatment details screen');
+        navigation.navigate('User add treatment screen');
     }
 
     return (
@@ -18,15 +19,11 @@ const Treatments = ({ navigation }) => {
                 colors={['yellow', 'green', 'white']}
                 style={styles.background}
             />
-            <View style={{ flexDirection: 'row', marginBottom: 20, marginTop: 100, alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}>
+            <View style={{  marginBottom: 20, marginTop: 100, alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Text style={styles.headerTextStyle}>
                     Treatments
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Add treatment screen')}>
-                    <Image source={require('../iconsOurDent/addtreatment.png')} style={{ left: 49, width: 30, height: 30, }}></Image>
-
-
-                </TouchableOpacity>
+                
             </View>
             <View style={{ marginBottom: 40, marginTop: 10 }}>
 
@@ -46,11 +43,11 @@ const Treatments = ({ navigation }) => {
             </View>
             <ScrollView style={{ height: '100%' }}>
 
-                <TreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
+                <UserTreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
 
-                <TreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
+                <UserTreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
 
-                <TreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
+                <UserTreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
 
 
 
@@ -60,7 +57,7 @@ const Treatments = ({ navigation }) => {
     )
 }
 
-export default Treatments
+export default UserTreatment
 
 const styles = StyleSheet.create({
     container: {
