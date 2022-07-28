@@ -4,7 +4,12 @@ import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackItem from '../components/FeedbackItem';
 
-const Feedback = () => {
+const Feedback = ({navigation}) => {
+
+  const enterFeedback = () =>{
+    navigation.navigate('Feedback details screen');
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -34,55 +39,27 @@ const Feedback = () => {
       </View>
       <ScrollView style={{ height: '100%' }}>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
         <TouchableOpacity>
-          <FeedbackItem />
+          <FeedbackItem enterFeedback={enterFeedback}/>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <FeedbackItem />
-        </TouchableOpacity>
-
-
+        
 
 
 

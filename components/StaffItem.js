@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const StaffItem = () => {
+const StaffItem = ({enterStaffDetails}) => {
   return (
-      
-    <View style={styles.container}>
+      <TouchableOpacity onPress={()=>enterStaffDetails()}>
+          <View style={styles.container}>
             <Image
                 style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={require('../iconsOurDent/Logo.png')}
+                source={require('../iconsOurDent/usermale.png')}
             />
 
             <View style={{flex:1}}>
@@ -24,6 +24,8 @@ const StaffItem = () => {
             </TouchableOpacity>
 
         </View>
+      </TouchableOpacity>
+    
   )
 }
 

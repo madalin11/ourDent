@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const FeedbackItem = () => {
+const FeedbackItem = ({enterFeedback}) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={()=>enterFeedback()}>
+            <View style={styles.container}>
             <Image
-                style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={require('../iconsOurDent/Logo.png')}
+                style={{ alignSelf: 'center', width: 50, height: 50, marginRight: 10, borderRadius: 0 }}
+                source={require('../iconsOurDent/usermale.png')}
             />
 
             <View style={{ flex: 1 }}>
@@ -38,6 +39,8 @@ const FeedbackItem = () => {
 
 
         </View>
+        </TouchableOpacity>
+        
     )
 }
 

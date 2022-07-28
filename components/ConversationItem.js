@@ -10,16 +10,19 @@ const ConversationItem = () => {
 
             <Avatar
                 rounded
-                
+                source={{
+                    uri:'https://www.pngfind.com/pngs/m/341-3415733_male-portrait-avatar-face-head-black-hair-shirt.png'
+                }}
             />
             <ListItem.Content >
                 <ListItem.Title style={{ fontWeight: "800" }}>
-                    
+                    Madalin Puiu
                 </ListItem.Title>
                 <ListItem.Subtitle
                     numberOfLines={1}
                     ellipsizeMode="tail"
                 >
+                    Ce faci ?
                 </ListItem.Subtitle>
 
             </ListItem.Content>

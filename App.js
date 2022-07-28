@@ -8,6 +8,9 @@ import Login from './Screens/Login';
 import Register from './Screens/Register';
 import AdminHome from './Screens/AdminHome';
 import TabNavigator from './Screens/TabNavigator';
+import FeedbackDetails from './Screens/FeedbackDetails';
+import StaffDetails from './Screens/StaffDetails';
+import UserDetails from './Screens/UserDetails';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -18,7 +21,10 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="Login screen" component={Login} />
         <Stack.Screen options={{ headerShown: false }} name="Register screen" component={Register} />
         <Stack.Screen options={{ headerShown: false }} name="Tab navigator screen" component={TabNavigator} />
-        
+        <Stack.Screen options={{ headerShown: false }} name="Feedback details screen" component={FeedbackDetails} />
+        <Stack.Screen options={{ headerShown: false }} name="Staff details screen" component={StaffDetails} />
+        <Stack.Screen options={{ headerShown: false }} name="User details screen" component={UserDetails} />
+ 
         </Stack.Navigator>
     </NavigationContainer>
   );

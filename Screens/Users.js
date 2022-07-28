@@ -2,8 +2,14 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View,TextInput,Keyboard
 import React from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
+import { NavigationContainer } from '@react-navigation/native';
 
-const Users = () => {
+const Users = ({navigation}) => {
+
+  const enterUserDetails = ()=>{
+    navigation.navigate('User details screen');
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -33,7 +39,7 @@ const Users = () => {
       </View>
       <ScrollView style={{ height: '100%' }}>
         <TouchableOpacity>
-          <StaffItem />
+          <StaffItem enterStaffDetails={enterUserDetails}/>
         </TouchableOpacity>
         <TouchableOpacity>
           <StaffItem />
