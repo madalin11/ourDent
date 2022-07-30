@@ -1,9 +1,34 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef ,useState} from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import { auth, db } from '../firebase'
 
-const StaffDetails = ({ navigation }) => {
+const StaffDetails = ({ navigation,route }) => {
     const scrollViewRef = useRef();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState('')
+
+
+    function deleteStaff(id) {
+        db.collection("peoples").doc(id).delete().then(() => {
+            console.log("Staff successfuly deleted");
+        }).catch((error) => alert(error));
+        navigation.goBack();
+    }
+    async function updateStaff(id) {
+        await db.collection("peoples").doc(id).update({
+            name: firstName + ' ' +  lastName,
+            phoneNumber: phoneNumber,
+            profilePhoto:profilePhoto,
+
+
+        })
+        
+        navigation.goBack();
+    }
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -46,11 +71,11 @@ const StaffDetails = ({ navigation }) => {
                         </View>
 
                         <TextInput
-                            placeholder="Add first name"
+                            placeholder={route?.params.name.split(' ')[0]}
 
 
                             //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                            onChangeText={text => setFirstName(text)}
                             style={styles.normalTextStyle}
                         />
                     </View>
@@ -61,9 +86,9 @@ const StaffDetails = ({ navigation }) => {
                             </Text>
                         </View>
                         <TextInput
-                            placeholder="Add last name"
+                            placeholder={route?.params.name.split(' ')[1]}
                             //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                            onChangeText={text => setLastName(text)}
                             style={styles.normalTextStyle}
                         />
 
@@ -76,11 +101,27 @@ const StaffDetails = ({ navigation }) => {
                         </View>
 
                         <TextInput
-                            placeholder="Add phone number"
+                            placeholder={route?.params.phoneNumber}
                             keyboardType="numeric"
 
                             //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                            onChangeText={text => setPhoneNumber(text)}
+                            style={styles.normalTextStyle}
+                        />
+                    </View>
+                    <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', marginHorizontal: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginBottom: 5 }}>
+                        <View style={{ borderBottomColor: '#202020', borderBottomWidth: 2, backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
+                            <Text style={styles.nameComp}>
+                                Profile photo
+                            </Text>
+                        </View>
+
+                        <TextInput
+                            placeholder={route?.params.profilePhoto}
+                            
+
+                            //value={firstName}
+                            onChangeText={text => setProfilePhoto(text)}
                             style={styles.normalTextStyle}
                         />
                     </View>
@@ -88,9 +129,9 @@ const StaffDetails = ({ navigation }) => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         alignSelf: 'center',
-                        marginTop: 300
+                        marginTop: 200
                     }}>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>updateStaff(route?.params.id)} >
                             <View style={{
                                 backgroundColor: 'rgba(255, 255, 255, 0.5)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,
@@ -104,7 +145,7 @@ const StaffDetails = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>deleteStaff(route?.params.id)}>
                             <View style={{
                                 backgroundColor: 'rgba(204, 12, 12, 0.7)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,

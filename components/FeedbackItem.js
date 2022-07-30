@@ -1,39 +1,39 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const FeedbackItem = ({enterFeedback}) => {
+const FeedbackItem = ({enterFeedback,profilePhoto,name,id,phoneNumber,rating}) => {
     return (
-        <TouchableOpacity onPress={()=>enterFeedback()}>
+        <TouchableOpacity key={id} onPress={()=>enterFeedback(name,id,profilePhoto,phoneNumber,rating)}>
             <View style={styles.container}>
             <Image
                 style={{ alignSelf: 'center', width: 50, height: 50, marginRight: 10, borderRadius: 0 }}
-                source={require('../iconsOurDent/usermale.png')}
+                source={{uri:profilePhoto ||'../iconsOurDent/usermale.png' }}
             />
 
             <View style={{ flex: 1 }}>
                 <Text numberOfLines={1} ellipsizeMode='tail' style={styles.treatmName}>
-                    Tudor Marcel Pavel
+                    {name}
                 </Text>
             </View>
 
             <Image
-                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: 'orange' }}
+                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(rating) >= 1? 'orange':'black' }}
                 source={require('../iconsOurDent/star.png')}
             />
             <Image
-                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: 'orange' }}
+                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(rating) >= 2? 'orange':'black' }}
                 source={require('../iconsOurDent/star.png')}
             />
             <Image
-                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: 'orange' }}
+                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(rating) >= 3? 'orange':'black' }}
                 source={require('../iconsOurDent/star.png')}
             />
             <Image
-                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50,tintColor:'black' }}
+                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50,tintColor: Math.trunc(rating) >= 5? 'orange':'black' }}
                 source={require('../iconsOurDent/star.png')}
             />
             <Image
-                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50,tintColor:'black' }}
+                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50,tintColor: Math.trunc(rating) == 5? 'orange':'black' }}
                 source={require('../iconsOurDent/star.png')}
             />
 

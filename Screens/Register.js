@@ -49,7 +49,8 @@ const Register = ({ navigation }) => {
             name: name,
             phoneNumber:phoneNumber,
             ID:memberID,
-            profilePhoto: photo
+            profilePhoto: photo,
+            rating: 5
 
         }).then(() => {
             console.log("User successfuly added");

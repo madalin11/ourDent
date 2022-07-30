@@ -1,15 +1,68 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
+import { auth, db } from '../firebase'
 
 const Staff = ({ navigation }) => {
+    const [searchText, setSearchText] = useState('');
+    const [staff, setStaff] = useState([]);
 
-    const enterStaff = () => {
-        navigation.navigate('Staff details screen');
+    function deleteStaff(id) {
+        db.collection("peoples").doc(id).delete().then(() => {
+            console.log("Staff successfuly deleted");
+        }).catch((error) => alert(error));
+        navigation.goBack();
     }
 
+    const enterStaff = (name,id,profilePhoto,phoneNumber) => {
+        navigation.navigate('Staff details screen',{
+            name:name,
+            id:id,
+            profilePhoto:profilePhoto,
+            phoneNumber:phoneNumber,
+
+        });
+    }
+
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .onSnapshot(snapshot => {
+                setStaff(
+                    snapshot.docs.filter((doc) => doc.data().ID == 1 || doc.data().ID == 2
+                    ).map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+                // setSearchabelFriends(friendsToAdd);
+            }
+
+            )
+
+        return unsubscribe;
+    }, [db])
+
+    function filterZZZ(element) {
+        try {
+            if (element.data.name == '') {
+                return false;
+            }
+            try {
+
+                if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
+                    return true;
+
+            } catch (err) {
+
+            }
+            return false
+        } catch (err) {
+
+        }
+        return true
+    }
     return (
         <View style={styles.container}>
             <LinearGradient
@@ -26,7 +79,7 @@ const Staff = ({ navigation }) => {
 
                 <TextInput
 
-                    //onChangeText={(text) => setTextSearch(text)}
+                    onChangeText={(text) => setSearchText(text)}
                     placeholder='Search' style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
                 >
 
@@ -39,20 +92,11 @@ const Staff = ({ navigation }) => {
             </View>
             <ScrollView style={{ height: '100%' }}>
 
-                <StaffItem enterStaffDetails={enterStaff} />
-
-
-                <StaffItem enterStaffDetails={enterStaff} />
-
-
-                <StaffItem enterStaffDetails={enterStaff} />
-
-
-                <StaffItem enterStaffDetails={enterStaff} />
-
-                <StaffItem enterStaffDetails={enterStaff} />
-
-                <StaffItem enterStaffDetails={enterStaff} />
+            {
+                    staff.filter(filterZZZ).map(({ id, data: { name, profilePhoto,phoneNumber } }) => (
+                        <StaffItem key={id}enterStaff={enterStaff} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} deleteStaff={deleteStaff}/>
+                    ))
+                }
 
 
 

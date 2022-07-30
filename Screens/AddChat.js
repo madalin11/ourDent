@@ -38,7 +38,7 @@ const AddChat = ({ navigation }) => {
         return true
     }
     const [textSearch, setSearchText] = useState('')
-    const [friendsToAdd, setFriendsToAdd] = useState([])
+    
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -161,7 +161,7 @@ const AddChat = ({ navigation }) => {
             <ScrollView style={{ height: '100%' }}>
                 {
                     friends.filter(filterZZZ).map(({ id, data: { name, profilePhoto } }) => (
-                        <FriendListItem key={id} iconPath={2} func={addConversation} friendName={name} id={id} friendPhoto={profilePhoto} />
+                        <FriendListItem key={id} func={addConversation} friendName={name} id={id} friendPhoto={profilePhoto} />
                     ))
                 }
             </ScrollView>

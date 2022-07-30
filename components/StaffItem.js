@@ -1,22 +1,22 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const StaffItem = ({enterStaffDetails}) => {
+const StaffItem = ({enterStaff,name,id,profilePhoto,phoneNumber,deleteStaff}) => {
   return (
-      <TouchableOpacity onPress={()=>enterStaffDetails()}>
+      <TouchableOpacity onPress={()=>enterStaff(name,id,profilePhoto,phoneNumber)}>
           <View style={styles.container}>
             <Image
                 style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={require('../iconsOurDent/usermale.png')}
+                source={{uri:profilePhoto || ' '}}
             />
 
             <View style={{flex:1}}>
                 <Text numberOfLines={1} ellipsizeMode='tail' style={styles.treatmName}>
-                Tudor Marcel Pavel
+                {name}
             </Text>
             </View>
             
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>deleteStaff(id)}>
                 <Image
                     style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50 }}
                     source={require('../iconsOurDent/trash.png')}

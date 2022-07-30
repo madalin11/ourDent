@@ -39,7 +39,7 @@ const Treatments = ({ navigation }) => {
     function filterZZZ(element) {
         try {
             if (element.data.name == '') {
-                return true;
+                return false;
             }
             try {
 

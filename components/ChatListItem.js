@@ -26,7 +26,7 @@ const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
 
     console.log(messages1)
     return (
-        <ListItem containerStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 20 }} style={{ marginBottom: 10, marginHorizontal: 28, borderRadius: 20 }} key={id} onPress={() => enterChat(id, friendName, friendPhoto)}>
+        <ListItem containerStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10 }} style={{ marginBottom: 10, marginHorizontal: 7, borderRadius: 10 }} key={id} onPress={() => enterChat(id, friendName, friendPhoto)}>
 
             <Avatar
                 rounded

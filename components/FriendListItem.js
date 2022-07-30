@@ -4,7 +4,7 @@ import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
 
-const FriendListItem = ({ friendName, id, friendPhoto, func, iconPath }) => {
+const FriendListItem = ({ friendName, id, friendPhoto, func }) => {
     const temp = auth.currentUser.uid;
     const a = require('../Icons/addfr.png')
     const b = require('../Icons/newmsg.png')
@@ -20,7 +20,7 @@ const FriendListItem = ({ friendName, id, friendPhoto, func, iconPath }) => {
                     </Text>
                 </View>
                 <TouchableOpacity onPress={() => func(id)} style={{ flex: 1, alignSelf: 'center' }}>
-                    <Image style={{ height: 20, width: 20 }} source={(iconPath == 1) ? a : b} />
+                    <Image style={{ height: 20, width: 20 }} source={ b} />
                 </TouchableOpacity>
             </View>
 
