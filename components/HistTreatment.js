@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import SelectDropdown from 'react-native-select-dropdown';
 
 const HistTreatment = () => {
-    const c = 'blue';
+    const statusColor = 'blue';
+    const showChoseFeedback = 'flex'
+    const feedCount = [1, 2, 3, 4, 5];
     return (
 
         <View style={styles.container}>
@@ -16,15 +19,31 @@ const HistTreatment = () => {
                     TreatmentItem
                 </Text>
             </View>
+            <View style={{}}>
+                <Text style={{
+                    fontFamily: 'Times New Roman',
+                    fontSize: 20,
+                    fontWeight: '400',
+                    color: statusColor,
+                    alignSelf: 'center',
+                    marginBottom: 5
+                }}>
+                    In progress
+                </Text>
+                <View style={{ alignItems: 'center', display: showChoseFeedback }}>
+                    <SelectDropdown
+                        defaultButtonText='Feedback'
+                        buttonTextStyle={{ fontFamily: 'Arial', fontSize: 16 }}
+                        data={feedCount}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, padding: 0, height: 20, width: 110 }}
+                    />
+                </View>
+            </View>
 
-            <Text style={{
-                fontFamily: 'Times New Roman',
-                fontSize: 20,
-                fontWeight: '400',
-                color: c
-            }}>
-                In progress
-            </Text>
 
 
         </View>

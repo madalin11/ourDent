@@ -24,7 +24,14 @@ const Request = () => {
                         TreatmentItem
                     </Text>
                 </View>
-
+                <Text style={{ marginRight: 10,
+                     fontFamily: 'Times New Roman',
+                      fontSize: 18,
+                       fontWeight: 'bold', 
+                       alignSelf: 'center',
+                       color:'blue' }}>
+                        Pending
+                    </Text>
 
 
             </View>

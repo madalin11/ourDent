@@ -26,7 +26,7 @@ const StaffRequests = ({ navigation }) => {
                 </Text>
                 
             </View>
-            <View style={{ marginBottom: 20, marginTop: 10 }}>
+            <View style={{ marginBottom: 20, marginTop: 10,backgroundColor:'rgba(255,255,255,0.0001)' }}>
 
                 <TextInput
 
