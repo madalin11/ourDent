@@ -1,21 +1,71 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
 import React from 'react'
+import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
+import FeedbackItem from '../components/FeedbackItem';
+import FeedbackUserDetails from '../components/FeedbackUserDetails';
 
-const FeedbackDetails = ({navigation}) => {
+const FeedbackDetails = ({ navigation }) => {
+
+  const enterFeedback = () => {
+    navigation.navigate('Feedback details screen');
+  }
+
   return (
     <View style={styles.container}>
-        <LinearGradient
+      <LinearGradient
         // Background Linear Gradient
         colors={['yellow', 'green', 'white']}
         style={styles.background}
       />
-      <Text>FeedbackDetails</Text>
-      <TouchableOpacity onPress={()=> navigation.navigate('Tab navigator screen')} style={{marginTop:200}}>
-          <Text>
-              Go Back
-          </Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity style={{ marginTop: 60, marginLeft: 15, marginRight: -15 }} onPress={() => navigation.navigate('Tab navigator screen')}>
+          <Image
+            style={{ alignSelf: 'flex-start', width: 22, height: 22 }}
+            source={require('../Icons/leftarrow.png')} />
+        </TouchableOpacity>
+      </View>
+      <View style={{ marginBottom: 20, marginTop: 10, alignSelf: 'center' }}>
+        <Text style={styles.headerTextStyle}>
+          All feedbacks
+        </Text>
+      </View>
+      <View style={{ marginBottom: 20, marginTop: 10 }}>
+
+        <TextInput
+
+          //onChangeText={(text) => setTextSearch(text)}
+          placeholder='Search' style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
+        >
+
+        </TextInput>
+
+        <TouchableOpacity style={{ position: 'absolute' }} onPress={Keyboard.dismiss}>
+          <Image source={require('../iconsOurDent/searchFeedback.png')} style={{ top: 8, left: 49, width: 30, height: 30, }}></Image>
+        </TouchableOpacity>
+
+      </View>
+      <ScrollView style={{ height: '100%' }}>
+
+
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+        <FeedbackUserDetails />
+
+
+
+
+
+      </ScrollView>
     </View>
   )
 }
@@ -23,18 +73,29 @@ const FeedbackDetails = ({navigation}) => {
 export default FeedbackDetails
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        alignContent:'center',
-       
+  container: {
+    flex: 1,
+    alignContent: 'center',
+    //alignItems: 'center',
 
 
-    },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: 800,
-      },
+
+  },
+  headerTextStyle: {
+    color: 'white',
+    fontFamily: 'Times New Roman',
+    fontSize: 40,
+    fontWeight: 'bold',
+    shadowColor: '#202020',
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    shadowOffset: { height: 3 }
+  },
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
 })

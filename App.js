@@ -17,6 +17,7 @@ import AddTreatment from './Screens/AddTreatment';
 import UserHome from './Screens/UserHome';
 import UserTreatment from './Screens/UserTreatment';
 import UserAddTreatment from './Screens/UserAddTreatment';
+import StaffHome from './Screens/StaffHome';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="Add treatment screen" component={AddTreatment} />
         <Stack.Screen options={{ headerShown: false }} name="User home screen" component={UserHome} />
         <Stack.Screen options={{ headerShown: false }} name="User add treatment screen" component={UserAddTreatment} />
+        <Stack.Screen options={{ headerShown: false }} name="Staff home screen" component={StaffHome} />
         
         </Stack.Navigator>
     </NavigationContainer>

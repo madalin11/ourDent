@@ -11,10 +11,11 @@ import Users from './Users';
 import Chat from './Chat';
 import UserDetails from './UserDetails';
 import UserTreatment from './UserTreatment';
+import MyList from './MyList';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = ({navigation}) => {
+const UserHome = ({navigation}) => {
     return (
         <Tab.Navigator screenOptions={{ tabBarStyle:{backgroundColor:'rgba(0, 255, 0, 0.1)' } ,headerShown: false }}  >
             <Tab.Screen name="Chat" component={Chat} options={{
@@ -48,12 +49,28 @@ const TabNavigator = ({navigation}) => {
                 ),
             }}
             />
+            <Tab.Screen name="My list" component={MyList} options={{
+                tabBarIcon: ({ focused }) => (
+                    <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
+                        <Image
+                            source={require('../iconsOurDent/mylist.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 26,
+                                height: 26,
+                            }}
+                        />
+                    </View>
+                ),
+            }}
+            />
+
             
             
         </Tab.Navigator>
     )
 }
 
-export default TabNavigator
+export default UserHome
 
 const styles = StyleSheet.create({})
