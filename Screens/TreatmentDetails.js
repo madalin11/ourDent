@@ -1,9 +1,32 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import { auth, db } from '../firebase'
 
-const TreatmentDetails = ({ navigation }) => {
+const TreatmentDetails = ({ navigation, route }) => {
     const scrollViewRef = useRef();
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState(0);
+    const [imageLink, setImageLink] = useState('')
+
+    function deleteTreatment(id) {
+        db.collection("treatments").doc(id).delete().then(() => {
+            console.log("Treatment successfuly deleted");
+        }).catch((error) => alert(error));
+        navigation.goBack();
+    }
+    async function updateTreatment(id) {
+        await db.collection("treatments").doc(id).update({
+            name: name,
+            description: description,
+            imageLink:imageLink,
+            price:price
+
+        })
+        
+        navigation.goBack();
+    }
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -46,11 +69,11 @@ const TreatmentDetails = ({ navigation }) => {
                         </View>
 
                         <TextInput
-                            placeholder="Crowns"
+                            placeholder={route?.params.name}
 
 
                             //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                            onChangeText={text => setName(text)}
                             style={styles.normalTextStyle}
                         />
                     </View>
@@ -61,12 +84,9 @@ const TreatmentDetails = ({ navigation }) => {
                             </Text>
                         </View>
                         <TextInput
-                            placeholder="A crown is a type of cap that completely covers a real tooth. It's usually made from metal, porcelain fused to metal, or ceramic and is fixed in your mouth.
-                        Crowns can be fitted where a tooth has broken, decayed or been damaged, or just to make a tooth look better.
-                        To fit a crown, the old tooth will need to be drilled down so it's like a small peg the crown will be fixed on to.
-                        It can take some time for the lab to prepare a new crown, so you probably will not have the crown fitted on the same day."
+                            placeholder={route?.params.description}
                             //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                            onChangeText={text => setDescription(text)}
                             style={styles.normalTextStyle}
                         />
 
@@ -79,11 +99,24 @@ const TreatmentDetails = ({ navigation }) => {
                         </View>
 
                         <TextInput
-                            placeholder="20$"
+                            placeholder={route?.params.price + "$"}
                             keyboardType="numeric"
 
-                            //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+
+                            onChangeText={text => setPrice(text)}
+                            style={styles.normalTextStyle}
+                        />
+                    </View>
+                    <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', marginHorizontal: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginBottom: 5 }}>
+                        <View style={{ borderBottomColor: '#202020', borderBottomWidth: 2, backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
+                            <Text style={styles.nameComp}>
+                                Image Link
+                            </Text>
+                        </View>
+
+                        <TextInput
+                            placeholder={route?.params.imageLink}
+                            onChangeText={text => setName(text)}
                             style={styles.normalTextStyle}
                         />
                     </View>
@@ -91,9 +124,9 @@ const TreatmentDetails = ({ navigation }) => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         alignSelf: 'center',
-                        marginTop: 300
+                        marginTop: 200
                     }}>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>updateTreatment(route?.params.id)} >
                             <View style={{
                                 backgroundColor: 'rgba(255, 255, 255, 0.5)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,
@@ -107,7 +140,7 @@ const TreatmentDetails = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={() => deleteTreatment(route?.params.id)}>
                             <View style={{
                                 backgroundColor: 'rgba(204, 12, 12, 0.7)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,

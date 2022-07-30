@@ -1,13 +1,59 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Keyboard } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { auth, db } from '../firebase'
 
 const Treatments = ({ navigation }) => {
+    const [treatments, setTreatments] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const enterTreatmentDetails = (name, id, imageLink, price,description) => {
+        navigation.navigate('Treatment details screen', {
+            id: id,
+            name: name,
+            description:description,
+            imageLink: imageLink,
+            price: price
+        });
 
-    const enterTreatmentDetails = () => {
-        navigation.navigate('Treatment details screen');
+    }
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("treatments")
+            .onSnapshot(snapshot =>
+                setTreatments(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }))
+                ))
+
+        return unsubscribe;
+    }, [db])
+    function deleteTreatment(id) {
+        db.collection("treatments").doc(id).delete().then(() => {
+            console.log("Treatment successfuly deleted");
+        }).catch((error) => alert(error));
+
+    }
+    function filterZZZ(element) {
+        try {
+            if (element.data.name == '') {
+                return true;
+            }
+            try {
+
+                if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
+                    return true;
+
+            } catch (err) {
+
+            }
+            return false
+        } catch (err) {
+
+        }
+        return true
     }
 
     return (
@@ -32,7 +78,7 @@ const Treatments = ({ navigation }) => {
 
                 <TextInput
 
-                    //onChangeText={(text) => setTextSearch(text)}
+                    onChangeText={(text) => setSearchText(text)}
                     placeholder='Search'
                     style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
                 >
@@ -46,14 +92,11 @@ const Treatments = ({ navigation }) => {
             </View>
             <ScrollView style={{ height: '100%' }}>
 
-                <TreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
-
-                <TreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
-
-                <TreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
-
-
-
+                {
+                    treatments.filter(filterZZZ).map(({ id, data }) => (
+                        <TreatmentItem key={id} enterTreatmentDetails={enterTreatmentDetails} name={data.name} id={id} imageLink={data.imageLink} deleteTreatm={deleteTreatment} price={data.price} description={data.description} />
+                    ))
+                }
             </ScrollView>
         </View>
 

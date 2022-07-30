@@ -1,31 +1,31 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const TreatmentItem = ({enterTreatmentDetails}) => {
+const TreatmentItem = ({  enterTreatmentDetails, name, id, imageLink,deleteTreatm,price,description }) => {
     return (
-        <TouchableOpacity onPress={()=>enterTreatmentDetails()}>
+        <TouchableOpacity key={id} onPress={() => enterTreatmentDetails(name,id,imageLink,price,description)}>
             <View style={styles.container}>
-            <Image
-                style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={require('../iconsOurDent/Logo.png')}
-            />
-
-            <View style={{flex:1}}>
-                <Text style={styles.treatmName}>
-                TreatmentItem
-            </Text>
-            </View>
-            
-            <TouchableOpacity>
                 <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50 }}
-                    source={require('../iconsOurDent/trash.png')}
+                    style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
+                    source={{ uri: imageLink || "https://www.caldentalpasadena.com/img/blog/what-is-included-in-orthodontic-treatment.jpg"}}
                 />
-            </TouchableOpacity>
 
-        </View>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.treatmName}>
+                        {name}
+                    </Text>
+                </View>
+
+                <TouchableOpacity onPress={()=>deleteTreatm(id)}>
+                    <Image
+                        style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50 }}
+                        source={require('../iconsOurDent/trash.png')}
+                    />
+                </TouchableOpacity>
+
+            </View>
         </TouchableOpacity>
-        
+
     )
 }
 

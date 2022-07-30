@@ -1,9 +1,40 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import { auth, db } from '../firebase'
 
 const AddTreatment = ({ navigation }) => {
     const scrollViewRef = useRef();
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
+    const [linkImage, setLinkImage] = useState('')
+
+    async function addTreatment(id) {
+        await db.collection("treatments").doc(makeid(10)).set({
+            name: name,
+            description: description,
+            price: price,
+            imageLink:linkImage || "https://www.caldentalpasadena.com/img/blog/what-is-included-in-orthodontic-treatment.jpg"
+
+
+        }).then(() => {
+            console.log("Treatment successfuly added");
+        }).catch((error) => alert(error));
+
+        navigation.goBack();
+    }
+    
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -48,8 +79,8 @@ const AddTreatment = ({ navigation }) => {
                         <TextInput
                             placeholder="Add name"
 
-
-                            //value={firstName}
+                            onChangeText={(text) => setName(text)}
+                        
                             //onChangeText={text => setFirstName(text)}
                             style={styles.normalTextStyle}
                         />
@@ -62,8 +93,8 @@ const AddTreatment = ({ navigation }) => {
                         </View>
                         <TextInput
                             placeholder="Add description"
-                            //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                           
+                            onChangeText={text => setDescription(text)}
                             style={styles.normalTextStyle}
                         />
 
@@ -79,8 +110,24 @@ const AddTreatment = ({ navigation }) => {
                             placeholder="Add price"
                             keyboardType="numeric"
 
-                            //value={firstName}
-                            //onChangeText={text => setFirstName(text)}
+                            
+                            onChangeText={text => setPrice(text)}
+                            style={styles.normalTextStyle}
+                        />
+                    </View>
+                    <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', marginHorizontal: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginBottom: 5 }}>
+                        <View style={{ borderBottomColor: '#202020', borderBottomWidth: 2, backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
+                            <Text style={styles.nameComp}>
+                                Image URL
+                            </Text>
+                        </View>
+
+                        <TextInput
+                            placeholder="Add image url"
+                            keyboardType="numeric"
+
+                            
+                            onChangeText={text => setLinkImage(text)}
                             style={styles.normalTextStyle}
                         />
                     </View>
@@ -88,9 +135,9 @@ const AddTreatment = ({ navigation }) => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         alignSelf: 'center',
-                        marginTop: 300
+                        marginTop: 200
                     }}>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={addTreatment}>
                             <View style={{
                                 backgroundColor: 'rgba(255, 255, 255, 0.4)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,
@@ -104,7 +151,7 @@ const AddTreatment = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>
 
-                        
+
 
 
                     </View>
