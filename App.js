@@ -18,6 +18,7 @@ import UserHome from './Screens/UserHome';
 import UserTreatment from './Screens/UserTreatment';
 import UserAddTreatment from './Screens/UserAddTreatment';
 import StaffHome from './Screens/StaffHome';
+import AddChat from './Screens/AddChat';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="User home screen" component={UserHome} />
         <Stack.Screen options={{ headerShown: false }} name="User add treatment screen" component={UserAddTreatment} />
         <Stack.Screen options={{ headerShown: false }} name="Staff home screen" component={StaffHome} />
+        <Stack.Screen options={{ headerShown: false }} name="Add chat" component={AddChat} />
         
         </Stack.Navigator>
     </NavigationContainer>

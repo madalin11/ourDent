@@ -1,104 +1,306 @@
 import React, { useLayoutEffect, useState, useRef, useEffect } from 'react'
 import { StyleSheet, Text, View, Modal, TouchableOpacity, KeyboardAvoidingView, Pressable, PlatformColor, ScrollView, TextInput, TouchableOpacityBase, Keyboard, Image } from 'react-native'
+import firebase from 'firebase/compat/app';
+import { Ionicons } from "@expo/vector-icons"
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { ListItem, Avatar } from 'react-native-elements'
-import { Ionicons } from "@expo/vector-icons"
-const ChatRoom = ({ navigation , route }) => {
-    const flag = route.params.flag
-    const scrollViewRef = useRef();
-    const [isVisible, setIsVisible] = useState(false)
 
- 
+import { ListItem, Avatar } from 'react-native-elements'
+import { db, auth } from '../firebase'
+
+const ChatRoom = ({ navigation, route }) => {
+    const temp = auth.currentUser.uid;
+    const current = route.params.id;
     const [hasPermission, setHasPermission] = useState(null);
-  
-    const [input, setInput] = useState('');
     
+    const [input, setInput] = useState('');
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: () => (
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Avatar
+                        rounded
+                        source={{
+                            uri: route.params.friendPhoto
+                        }}
+                    />
+                    <Text>
+                        {route.params.friendName}
+                    </Text>
+
+                </View>
+            ),
+            headerLeft: () => {
+                <TouchableOpacity>
+
+                </TouchableOpacity>
+            }
+        })
+
+    }, [navigation, route])
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
+    const [messages, setMessages] = useState([])
+    useLayoutEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .doc(temp)
+            .collection("doctors")
+            .doc(current)
+            .collection("messages")
+            .onSnapshot((snapshot) => setMessages(
+                snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            ))
+        return unsubscribe;
+    }, [route, navigation])
+    const snapCamera = route.params.snapCamera;
+    async function sendMessage(id) {
+        if (checkTextInput()) {
+            await db
+                .collection("peoples")
+                .doc(temp).collection("doctors")
+                .doc(id)
+                .collection("messages")
+                .doc(makeid(15))
+                .set({
+                    message: input,
+                    timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    uid: temp
+                })
+                .then(() => {
+                    console.log("merge1");
+                })
+                .catch((error) => alert(error));
+
+            await db
+                .collection("peoples")
+                .doc(id).collection("doctors")
+                .doc(temp)
+                .collection("messages")
+                .doc(makeid(16))
+                .set({
+                    message: input,
+                    timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    uid: temp
+                })
+                .then(() => {
+                    console.log("merge2");
+                })
+                .catch((error) => alert(error));
+
+            await db
+                .collection("peoples")
+                .doc(temp).collection("doctors")
+                .doc(id)
+                .update({
+                    lastMessage: input
+                })
+                .then(() => {
+                    console.log("merge1");
+                })
+                .catch((error) => alert(error));
+
+            await db
+                .collection("peoples")
+                .doc(id).collection("doctors")
+                .doc(temp)
+                .update({
+                    lastMessage: input,
+                })
+                .then(() => {
+                    console.log("merge2");
+                })
+                .catch((error) => alert(error));
+        }
+        setInput('')
+        scrollViewRef.current.scrollToEnd({ animated: true })
+    }
+
+    function checkTextInput() {
+        //Check for the Name TextInput
+        if (!input.trim()) {
+            return false;
+        }
+        return true;
+    }
+    function formatDate(date) {
+        var year = date.getFullYear(),
+            month = date.getMonth() + 1, // months are zero indexed
+            day = date.getDate(),
+            hour = date.getHours(),
+            minute = date.getMinutes(),
+            second = date.getSeconds(),
+            hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
+            minuteFormatted = minute < 10 ? "0" + minute : minute,
+            morning = hour < 12 ? "am" : "pm";
+
+        return month + "/" + day + "/" + year + " " + hourFormatted + ":" +
+            minuteFormatted + morning;
+    }
+    const scrollViewRef = useRef();
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener("keyboardDidShow", () =>
+            scrollViewRef.current.scrollToEnd({ animated: true })
+        );
+        const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+
+        });
+
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        };
+    }, []);
+    const [isVisible, setIsVisible] = useState(false)
     return (
-      /*  <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+
             <LinearGradient
                 // Background Linear Gradient
                 colors={['yellow', 'green', 'white']}
                 style={styles.background}
             />
-            <Text>Chat room</Text>
-            <TouchableOpacity onPress={() => {
-                if (flag) {
-                    navigation.navigate('Tab navigator screen')
-                }else {
-                    navigation.navigate('User home screen');
-                }
-
-            }}
-                style={{ marginTop: 200 }}>
-                <Text>
-                    Go Back
-                </Text>
-            </TouchableOpacity>
-        </View>
-        */
-        <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-
-        <LinearGradient
-            // Background Linear Gradient
-            colors={['yellow', 'green', 'white']}
-            style={styles.background}
-        />
-        <ListItem containerStyle={{ backgroundColor: 'transparent', borderRadius: 30, marginTop: 25 }}>
+            <ListItem containerStyle={{ backgroundColor: 'transparent', borderRadius: 30, marginTop: 25 }}>
 
 
-            <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', flexDirection: 'row', padding: 16, borderRadius: 30 }}>
-                <View style={{ flex: 8 }}>
-                    <Text style={{ fontSize: 24, fontWeight: '500', textAlign: 'left', marginLeft: 75 }} >
-                       
-                    </Text>
+                <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', flexDirection: 'row', padding: 16, borderRadius: 30 }}>
+                    <View style={{ flex: 8 }}>
+                        <Text style={{ fontSize: 24, fontWeight: '500', textAlign: 'left', marginLeft: 75 }} >
+                            {route.params.friendName}
+                        </Text>
+                    </View>
                 </View>
-            </View>
 
-            <Avatar
-                containerStyle={{ backgroundColor: '#202020', position: 'absolute', left: 14 }}
-                rounded
-                size={"large"}
-               // source={{
-               //     uri: route.params.friendPhoto
-               // }}
-            />
+                <Avatar
+                    containerStyle={{ backgroundColor: '#202020', position: 'absolute', left: 14 }}
+                    rounded
+                    size={"large"}
+                    source={{
+                        uri: route.params.friendPhoto
+                    }}
+                />
 
-        </ListItem>
-        <KeyboardAvoidingView
+            </ListItem>
+            <KeyboardAvoidingView
 
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={styles.container}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 0 : undefined}
-        >
-            <>
-                <ScrollView
-                    style={{ top: -5 }}
-                    ref={scrollViewRef}
-                    onContentSizeChange={() =>
-                        scrollViewRef.current.scrollToEnd({ animated: true })
+                behavior={Platform.OS === "ios" ? "padding" : undefined}
+                style={styles.container}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : undefined}
+            >
+                <>
+                    <ScrollView
+                        style={{ top: -5 }}
+                        ref={scrollViewRef}
+                        onContentSizeChange={() =>
+                            scrollViewRef.current.scrollToEnd({ animated: true })
 
-                    }>
-                  
-                </ScrollView>
-                <View style={styles.footer}>
-                    
-                    <TextInput
-                        value={input}
-                        onSubmitEditing={() => setInput('')}
-                        onChangeText={(text) => setInput(text)}
-                        placeholder="Message"
-                        placeholderTextColor="#707070"
-                        style={styles.textInput}
-                    />
-                    <TouchableOpacity >
-                        <Ionicons name="send" size={24} color="#202020" />
-                    </TouchableOpacity>
-                </View>
-            </>
-        </KeyboardAvoidingView>
-    </SafeAreaView >
+                        }>
+                        {messages.sort((x, y) => {
+                            return x.data.timeStamp - y.data.timeStamp
+                        }).map(({ id, data: { message, timeStamp, uid } }) =>
+                            uid === temp ? (((message?.includes('https:') || (message?.includes('file'))) ?
+                                (<View onPress={() => setIsVisible(true)} key={makeid(9)} style={{ alignSelf: 'flex-end', marginVertical: 10, marginHorizontal: 10 }}>
+                                    <Image key={makeid(4)}
+                                        source={{ uri: message }}
+                                        style={{ height: 140, width: 140, borderRadius: 15 }}
+                                    />
+                                    <ImageView
+                                        images={{ uri: message }}
+                                        imageIndex={0}
+                                        visible={isVisible}
+                                        onRequestClose={() => setIsVisible(false)}
+                                    />
+                                </View>) : (
+                                    <View key={makeid(12)} style={{
+                                        backgroundColor: 'rgba(0, 185, 255, 0.25)',
+                                        alignSelf: 'flex-end',
+                                        borderBottomStartRadius: 15,
+                                        borderTopLeftRadius: 15,
+                                        borderBottomRightRadius: 15,
+                                        marginHorizontal: 10,
+                                        marginVertical: 5,
+                                        paddingHorizontal: 10,
+                                        alignContent: 'center',
+                                        maxWidth: 250,
+                                    }}>
+                                        <Avatar />
+                                        <Text style={styles.reciver}>
+                                            {message}
+                                        </Text>
+                                    </View>
+                                ))) : (((message?.includes('https:') || (message?.includes('file'))) ?
+                                    (
+                                        (<View key={makeid(9)} style={{ alignSelf: 'flex-start', marginVertical: 10, marginHorizontal: 10 }}>
+                                            <Image key={makeid(4)}
+                                                source={{ uri: message }}
+                                                style={{ height: 140, width: 140, borderRadius: 15 }}
+                                            />
+                                        </View>)
+                                    ) : (
+                                        <View key={makeid(12)} style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                                            alignSelf: 'flex-start',
+                                            borderBottomStartRadius: 15,
+                                            borderTopRightRadius: 15,
+                                            borderBottomRightRadius: 15,
+                                            marginHorizontal: 10,
+                                            marginVertical: 5,
+                                            paddingHorizontal: 10,
+                                            alignContent: 'center',
+                                            maxWidth: 250,
+                                        }}>
+                                            <Avatar />
+                                            <Text style={styles.transmiter}>
+                                                {message}
+                                            </Text>
+                                        </View>
+                                    ))
+                            ))
+                        }
+                    </ScrollView>
+                    <View style={styles.footer}>
+                        <TextInput
+                            value={input}
+                            onSubmitEditing={() => setInput('')}
+                            onChangeText={(text) => setInput(text)}
+                            placeholder="Message"
+                            placeholderTextColor="#707070"
+                            style={styles.textInput}
+                        />
+                        <TouchableOpacity onPress={() => sendMessage(current)} >
+                            <Ionicons name="send" size={24} color="#202020" />
+                        </TouchableOpacity>
+                    </View>
+                </>
+            </KeyboardAvoidingView>
+        </SafeAreaView >
     )
 }
 

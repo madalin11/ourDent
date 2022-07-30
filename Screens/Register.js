@@ -1,5 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import {auth,db} from '../firebase';
 import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native'
 
 
@@ -12,9 +13,88 @@ const Register = ({ navigation }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
     const [memberID, setMemberID] = useState('');
+    const [flagReg, setflagReg] = useState('')
+    function checkTextInput() {
+        if (!firstName.trim()) {
+            alert('Please Enter First Name');
+            return;
+        }
+        
+        if (!lastName.trim()) {
+            alert('Please Enter Last Name');
+            return;
+        }
+        if (!email.trim()) {
+            alert('Please Enter email');
+            return;
+        }
+        if (!phoneNumber.trim()) {
+            alert('Please Enter Phone Number');
+            return;
+        }
+        if (!memberID.trim() && (memberID.trim()!=1 || memberID.trim()!=2 || memberID.trim()!=3) ) {
+            alert('Please Enter valid ID');
+            return;
+        }
+        if (repetePassword.trim() !== password.trim()) {
+            alert('Password does\'t match');
+            return;
+        }
 
+        return true;
+    };
+    async function createPeople(temp, name, photo) {
+        await db.collection("peoples").doc(temp).set({
+            email:email,
+            name: name,
+            phoneNumber:phoneNumber,
+            ID:memberID,
+            profilePhoto: photo
+
+        }).then(() => {
+            console.log("User successfuly added");
+        }).catch((error) => alert(error));
+    }
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                if(memberID == 1){
+                    navigation.replace("Tab navigator screen");
+                }else if(memberID == 2){
+                    navigation.replace("Staff home screen");
+                }else if(memberID == 3){
+                    navigation.replace("User home screen");
+                }
+                
+            }
+        })
+
+        return unsubscribe
+    }, [flagReg])
     const handleSignUp = () => {
-        navigation.navigate("Tab navigator screen")
+        if (checkTextInput() == true) {
+
+            auth
+                .createUserWithEmailAndPassword(email, password)
+                .then((authUser) => {
+                    const auth1 = authUser.user;
+
+                    // Updates the user attributes:
+                    const fullName = firstName + " " + lastName;
+                    auth1.updateProfile({
+                        displayName: fullName,
+                        photoURL: photoUrl || "https://www.pngfind.com/pngs/m/341-3415733_male-portrait-avatar-face-head-black-hair-shirt.png"
+                    }).then(function () {
+                        console.log(auth1.displayName + "" + auth1.photoURL)
+                        console.log(auth1.uid)
+                        setflagReg('Account has been created !');
+                        createPeople(auth1.uid, auth1.displayName, auth1.photoURL);
+                    }, function (error) {
+                    });
+                })
+                .catch(error => alert(error.message))
+        }
+        
     }
 
   return (
@@ -62,11 +142,11 @@ const Register = ({ navigation }) => {
                     <TextInput
                         placeholder="Email"
                         type="email"
-                        autoCapitalize="none"
                         value={email}
                         onChangeText={text => setEmail(text)}
                         style={styles.input}
                         keyboardType="email-address"
+                        autoCapitalize="none"
 
                     />
 
@@ -99,7 +179,7 @@ const Register = ({ navigation }) => {
                         onChangeText={text => setRepetePassword(text)}
                         style={styles.input}
                         secureTextEntry
-                        //onSubmitEditing={handleSignUp}
+                        onSubmitEditing={handleSignUp}
                     />
                     <TextInput
                         placeholder="ID (1:Admin,2:Staff or 3:User)"
@@ -107,7 +187,7 @@ const Register = ({ navigation }) => {
                         onChangeText={text => setMemberID(text)}
                         style={styles.input}
                         //secureTextEntry
-                        //onSubmitEditing={handleSignUp}
+                        onSubmitEditing={handleSignUp}
                     />
                 </View>
                 <View style={styles.buttonContainer}>

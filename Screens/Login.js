@@ -2,11 +2,62 @@
 import React, { useState, useEffect } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, Image, Platform } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { auth, db } from '../firebase';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [memberID, setMemberID] = useState('')
+    const [temp, settemp] = useState(auth?.currentUser?.uid);
+
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .onSnapshot(snapshot => {
+                setMemberID(
+                    snapshot.docs.filter((doc) => {
+                        let t = false;
+
+                        if (temp == doc.id) {
+                            t = true;
+                        }
+                        return t;
+                    }
+                    ).map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+
+            })
+        return unsubscribe;
+    }, [temp])
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                if (memberID[0]?.data.ID == 1) {
+                    navigation.replace("Tab navigator screen");
+                } else if (memberID[0]?.data.ID == 2) {
+                    navigation.replace("Staff home screen");
+                } else if (memberID[0]?.data.ID == 3) {
+                    navigation.replace("User home screen");
+                }
+            }
+        })
+
+        return unsubscribe
+    }, [memberID])
+    const handleLogin = () => {
+        auth
+            .signInWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log('Logged in with:', user.uid);
+                settemp(user.uid);
+
+            })
+            .catch(error => alert(error.message))
+    }
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView
@@ -34,13 +85,15 @@ const Login = ({ navigation }) => {
                         placeholder="Email"
                         type="email"
                         value={email}
-                        //onChangeText={text => setEmail(text)}
+                        onChangeText={text => setEmail(text)}
                         style={styles.input}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
                     />
                     <TextInput
                         placeholder="Password"
                         value={password}
-                        //onChangeText={text => setPassword(text)}
+                        onChangeText={text => setPassword(text)}
                         style={styles.input}
                         secureTextEntry
                     />
@@ -48,14 +101,14 @@ const Login = ({ navigation }) => {
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('User home screen')}
+                        onPress={handleLogin}
                         style={styles.button}
 
                     >
                         <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("Register screen")}
+                        onPress={() => navigation.navigate('Register screen')}
                         style={[styles.button, styles.buttonOutline]}
 
                     >

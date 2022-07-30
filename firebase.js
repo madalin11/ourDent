@@ -1,9 +1,8 @@
 // Import the functions you need from the SDKs you need
-import * as firebase from "firebase";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-import "firebase/auth"
-import "firebase/firestore"
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
 //import {storage}from "firebase/storage"
 
 // Your web app's Firebase configuration
@@ -15,7 +14,6 @@ const firebaseConfig = {
     messagingSenderId: "630996289938",
     appId: "1:630996289938:web:58fbcb8b3aeea06576594b"
   };
-
 // Initialize Firebase
 let app;
 if (firebase.apps.length === 0) {
@@ -26,5 +24,5 @@ if (firebase.apps.length === 0) {
 }
 const db = app.firestore();
 const auth = firebase.auth();
-const storage = app.storage();
-export { auth, db, storage };
+
+export { auth, db };
