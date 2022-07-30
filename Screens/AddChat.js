@@ -17,7 +17,7 @@ const AddChat = ({ navigation }) => {
     const temp = auth.currentUser.uid;
     const [friends, setFriends] = useState([]);
 
-    
+
     function filterZZZ(friend) {
         try {
             if (friend.data.name == '') {
@@ -125,26 +125,36 @@ const AddChat = ({ navigation }) => {
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
-                colors={['#ADD8E6', '#D6F3F2', 'white']}
+                colors={['yellow', 'green', 'white']}
                 style={styles.background}
             />
+            <View style={{
+                marginTop: 90,
+                alignContent:'center',
+                alignItems:'center',
+                flexDirection: 'row'
+            }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ alignSelf: 'center',flex:1, marginLeft: 10 }}>
+                    <Image style={{ width: 20, height: 20, tintColor: 'black' }} source={require('../Icons/leftarrow.png')}></Image>
+                </TouchableOpacity>
+                <Text style={styles.titleTextStyle}>
+                    New conversation
+                </Text>
+            </View>
 
-            <Text style={{ marginTop: 85, fontSize: 24, textAlign: 'center', color: '#3570EC', fontWeight: '500' }}>
-                New conversation
-            </Text>
 
             <View style={{ marginBottom: 10, marginTop: 30 }}>
 
                 <TextInput
 
-                    onChangeText={(text) => setTextSearch(text)}
+                    onChangeText={(text) => setSearchText(text)}
                     placeholder='Search by name' style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 19 }}
                 >
 
                 </TextInput>
 
                 <TouchableOpacity style={{ position: 'absolute' }} onPress={Keyboard.dismiss}>
-                    <Image source={require('../Icons/search.png')} style={{ top: 8, left: 49, width: 30, height: 30, }}></Image>
+                    <Image source={require('../iconsOurDent/searchTreatm.png')} style={{ top: 8, left: 49, width: 30, height: 30, }}></Image>
                 </TouchableOpacity>
 
             </View>
@@ -183,5 +193,19 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         height: 900,
-    }
+    }, titleTextStyle: {
+        fontFamily: 'Times New Roman',
+        fontSize: 34,
+        fontWeight: 'bold',
+        color: 'white',
+        shadowColor: '#202020',
+        shadowOffset: { height: 3 },
+        shadowOpacity: 1,
+       flex:6
+
+
+
+
+
+    },
 })
