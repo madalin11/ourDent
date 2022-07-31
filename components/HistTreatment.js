@@ -1,23 +1,75 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SelectDropdown from 'react-native-select-dropdown';
+import { auth, db } from '../firebase';
 
-const HistTreatment = () => {
-    const statusColor = 'blue';
+const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, idDoctor}) => {
+    const [statusColor, setStatusColor] = useState('black')
+
     const showChoseFeedback = 'flex'
     const feedCount = [1, 2, 3, 4, 5];
+    const [status, setStatus] = useState([]);
+    const temp = auth.currentUser.uid;
+
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .doc(idDoctor)
+            .collection("requests")
+            .onSnapshot(snapshot => {
+                setStatus(
+                    snapshot.docs.filter((doc) => {
+
+                        if (doc.data().idUser == temp && doc.id == id) {
+                            setColors(doc.data().status)
+                            return true;
+
+
+                        }
+                        return false;
+                    }).map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+
+            }
+
+            )
+        return unsubscribe;
+    }, [db])
+
+    function setColors(status) {
+
+        let color = 'white';
+        if (status == 'Requested') {
+            color = 'black';
+        } else if (status == 'In progress') {
+            color = 'blue';
+        } else if (status == 'Rejected') {
+            color = 'red';
+        } else if (status == 'Done') {
+            color = 'green';
+        }
+        setStatusColor(color)
+        return true;
+    }
+
     return (
 
-        <View style={styles.container}>
+        <View key={id} style={styles.container}>
             <Image
                 style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={require('../iconsOurDent/Logo.png')}
+                source={{ uri: dataTreatm?.imageLink || '../iconsOurDent/Logo.png' }}
             />
 
             <View style={{ flex: 1 }}>
                 <Text style={styles.treatmName}>
-                    TreatmentItem
+                    {dataTreatm?.name}
                 </Text>
+                <Text style={{ fontFamily: 'Times New Roman', fontSize: 16, color: 'rgba(10,41,0,0.9)' }}>
+                    {'Date: ' + status[0]?.data.choosenDay + ' ' + status[0]?.data.choosenMounth + ' ' + status[0]?.data.choosenYear + ' '}
+                </Text>
+
             </View>
             <View style={{}}>
                 <Text style={{
@@ -28,14 +80,15 @@ const HistTreatment = () => {
                     alignSelf: 'center',
                     marginBottom: 5
                 }}>
-                    In progress
+                    {status[0]?.data.status}
                 </Text>
                 <View style={{ alignItems: 'center', display: showChoseFeedback }}>
                     <SelectDropdown
-                        defaultButtonText='Feedback'
+                        defaultButtonText={rating == -1 ? 'Feedback' : (rating + ' stars')}
                         buttonTextStyle={{ fontFamily: 'Arial', fontSize: 16 }}
-                        data={feedCount}
+                        data={feedCount.map((elm) => elm + ' ' + 'stars')}
                         onSelect={(selectedItem, index) => {
+                            addFeedback(id, selectedItem.split(' ')[0]);
                             console.log(selectedItem, index)
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
@@ -64,7 +117,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5
+        paddingVertical: 5,
+        shadowColor: '#202020',
+        shadowOpacity: 0.7,
+        shadowOffset: { height: 15 },
+        shadowRadius: 20
 
     },
     treatmName: {

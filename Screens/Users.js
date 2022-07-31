@@ -1,14 +1,70 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
+import { auth, db } from '../firebase';
 
 const Users = ({ navigation }) => {
 
-  const enterUserDetails = () => {
-    navigation.navigate('User details screen');
+  const [searchText, setSearchText] = useState('');
+  const [users, setUsers] = useState([]);
+
+  function deleteUser(id) {
+    db.collection("peoples").doc(id).delete().then(() => {
+      console.log("User successfuly deleted");
+    }).catch((error) => alert(error));
+    
   }
+
+  const enterUserDetails = (name, id, profilePhoto, phoneNumber) => {
+    navigation.navigate('User details screen', {
+      name: name,
+      id: id,
+      profilePhoto: profilePhoto,
+      phoneNumber: phoneNumber,
+
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("peoples")
+      .onSnapshot(snapshot => {
+        setUsers(
+          snapshot.docs.filter((doc) => doc.data().ID == 3
+          ).map((doc) => ({
+            id: doc.id,
+            data: doc.data()
+          })))
+        // setSearchabelFriends(friendsToAdd);
+      }
+
+      )
+
+    return unsubscribe;
+  }, [db])
+
+  function filterZZZ(element) {
+    try {
+      if (element.data.name == '') {
+        return false;
+      }
+      try {
+
+        if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
+          return true;
+
+      } catch (err) {
+
+      }
+      return false
+    } catch (err) {
+
+    }
+    return true
+  }
+
 
   return (
     <View style={styles.container}>
@@ -39,19 +95,11 @@ const Users = ({ navigation }) => {
       </View>
       <ScrollView style={{ height: '100%' }}>
 
-        <StaffItem enterStaffDetails={enterUserDetails} />
-
-        <StaffItem enterStaffDetails={enterUserDetails} />
-
-        <StaffItem enterStaffDetails={enterUserDetails} />
-
-        <StaffItem enterStaffDetails={enterUserDetails} />
-
-        <StaffItem enterStaffDetails={enterUserDetails} />
-
-        <StaffItem enterStaffDetails={enterUserDetails} />
-
-        <StaffItem enterStaffDetails={enterUserDetails} />
+        {
+          users.filter(filterZZZ).map(({ id, data: { name, profilePhoto, phoneNumber } }) => (
+            <StaffItem key={id} enterStaff={enterUserDetails} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} deleteStaff={deleteUser} />
+          ))
+        }
 
 
 

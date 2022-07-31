@@ -2,18 +2,18 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 
-const UserTreatmentItem = ({enterTreatmentDetails}) => {
+const UserTreatmentItem = ({enterTreatmentDetails,name,description , imageLink,id,price}) => {
     return (
-        <TouchableOpacity onPress={()=>enterTreatmentDetails()}>
+        <TouchableOpacity onPress={()=>enterTreatmentDetails(name,description,imageLink,id,price)}>
             <View style={styles.container}>
             <Image
                 style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={require('../iconsOurDent/Logo.png')}
+                source={{uri:imageLink || '../iconsOurDent/Logo.png'}}
             />
 
             <View style={{flex:1}}>
                 <Text style={styles.treatmName}>
-                TreatmentItem
+                {name}
             </Text>
             </View>
             

@@ -32,6 +32,7 @@ const UserHome = ({navigation}) => {
                     </View>
                 ),
                 
+                
             }}
             />
             <Tab.Screen name="Treatments" component={UserTreatment} options={{
@@ -51,8 +52,8 @@ const UserHome = ({navigation}) => {
             />
             <Tab.Screen name="My list" component={MyList} options={{
                 tabBarIcon: ({ focused }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
-                        <Image
+                    <View  style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
+                        <Image 
                             source={require('../iconsOurDent/mylist.png')}
                             resizeMode='contain'
                             style={{
@@ -61,7 +62,9 @@ const UserHome = ({navigation}) => {
                             }}
                         />
                     </View>
-                ),
+                ),tabBarButton:{
+                    
+                }
             }}
             />
 

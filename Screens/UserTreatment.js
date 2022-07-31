@@ -1,16 +1,56 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Keyboard } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import UserTreatmentItem from '../components/UserTreatmentItem';
-
+import { auth, db } from '../firebase';
 
 const UserTreatment = ({ navigation }) => {
 
-    const enterTreatmentDetails = () => {
-        navigation.navigate('User add treatment screen');
-    }
+    const [treatments, setTreatments] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const enterTreatmentDetails = (name,description, imageLink, id,price) => {
+        navigation.navigate('User add treatment screen', {
+            id: id,
+            name: name,
+            description: description,
+            imageLink: imageLink,
+            price: price
+        });
 
+    }
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("treatments")
+            .onSnapshot(snapshot =>
+                setTreatments(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }))
+                ))
+
+        return unsubscribe;
+    }, [db])
+    function filterZZZ(element) {
+        try {
+            if (element.data.name == '') {
+                return false;
+            }
+            try {
+
+                if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
+                    return true;
+
+            } catch (err) {
+
+            }
+            return false
+        } catch (err) {
+
+        }
+        return true
+    }
     return (
 
         <View style={styles.container}>
@@ -19,17 +59,17 @@ const UserTreatment = ({ navigation }) => {
                 colors={['yellow', 'green', 'white']}
                 style={styles.background}
             />
-            <View style={{  marginBottom: 20, marginTop: 100, alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}>
+            <View style={{ marginBottom: 20, marginTop: 100, alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Text style={styles.headerTextStyle}>
                     Treatments
                 </Text>
-                
+
             </View>
             <View style={{ marginBottom: 40, marginTop: 10 }}>
 
                 <TextInput
 
-                    //onChangeText={(text) => setTextSearch(text)}
+                    onChangeText={(text) => setSearchText(text)}
                     placeholder='Search'
                     style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
                 >
@@ -43,11 +83,11 @@ const UserTreatment = ({ navigation }) => {
             </View>
             <ScrollView style={{ height: '100%' }}>
 
-                <UserTreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
-
-                <UserTreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
-
-                <UserTreatmentItem enterTreatmentDetails={enterTreatmentDetails} />
+                {
+                    treatments.filter(filterZZZ).map(({ id, data }) => (
+                        <UserTreatmentItem key={id} enterTreatmentDetails={enterTreatmentDetails} name={data.name} id={id} imageLink={data.imageLink} price={data.price} description={data.description} />
+                    ))
+                }
 
 
 

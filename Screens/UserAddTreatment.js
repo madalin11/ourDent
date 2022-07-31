@@ -1,11 +1,17 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import SelectDropdown from 'react-native-select-dropdown';
 import DatePicker from 'react-native-date-picker'
+import { auth, db } from '../firebase';
 
-const UserAddTreatment = ({ navigation }) => {
+const UserAddTreatment = ({ navigation, route }) => {
     const countries = ["Alina Popa", "Ghibu Tiberiu"];
+    const [staff, setStaff] = useState([]);
+    const [choosenDoctor, setChoosenDoctor] = useState('');
+    const [choosenDay, setChoosenDay] = useState('');
+    const [choosenMounth, setChoosenMounth] = useState('');
+    const [choosenYear, setChoosenYear] = useState('');
     const mounth = ["January",
         'February',
         'March',
@@ -18,10 +24,78 @@ const UserAddTreatment = ({ navigation }) => {
         'October',
         'November',
         'December']
-    const year = ['2022','2023','2024','2025'];
-    const day = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+    const year = ['2022', '2023', '2024', '2025'];
+    const day = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     const defaultValue = "Medic";
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .onSnapshot(snapshot => {
+                setStaff(
+                    snapshot.docs.filter((doc) => doc.data().ID == 1 || doc.data().ID == 2
+                    ).map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+                // setSearchabelFriends(friendsToAdd);
+            }
 
+            )
+
+        return unsubscribe;
+    }, [db])
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
+    async function createRequest(idDoctor, idTreatment,idUser,choosenDay,choosenMounth,choosenYear) {
+        if (true) { //will be good if u cheff that all fields are choosen
+            let idHistT = makeid(10);
+            await db
+                .collection("peoples")
+                .doc(idDoctor).collection("requests")
+                .doc(idHistT)
+                .set({
+                    idTreatment: idTreatment,
+                    //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    idUser: idUser,
+                    choosenDay:choosenDay,
+                    choosenMounth:choosenMounth,
+                    choosenYear:choosenYear,
+                    status:'Requested'
+
+                })
+                .then(() => {
+                    console.log("Successufuly request added");
+                })
+                .catch((error) => alert(error));
+
+            await db
+                .collection("peoples")
+                .doc(idUser).collection("myRequests")
+                .doc(idHistT)
+                .set({
+                    idTreatment: idTreatment,
+                    //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    idDoctor: idDoctor,
+                    rating:-1
+
+                })
+                .then(() => {
+                    console.log("Successfuly request added to history user");
+                })
+                .catch((error) => alert(error));
+
+           navigation.navigate('User home screen',{refreshPage: true});
+        }
+    
+    }
     return (
         <View style={styles.container}>
             <LinearGradient
@@ -52,7 +126,7 @@ const UserAddTreatment = ({ navigation }) => {
                     </View>
 
                     <Text style={styles.normalTextStyle}>
-                        Crowns
+                        {route?.params.name}
                     </Text>
                 </View>
                 <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', marginHorizontal: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginBottom: 5 }}>
@@ -63,10 +137,7 @@ const UserAddTreatment = ({ navigation }) => {
                     </View>
 
                     <Text style={styles.normalTextStyle}>
-                        A crown is a type of cap that completely covers a real tooth. It's usually made from metal, porcelain fused to metal, or ceramic and is fixed in your mouth.
-                        Crowns can be fitted where a tooth has broken, decayed or been damaged, or just to make a tooth look better.
-                        To fit a crown, the old tooth will need to be drilled down so it's like a small peg the crown will be fixed on to.
-                        It can take some time for the lab to prepare a new crown, so you probably will not have the crown fitted on the same day.
+                        {route?.params.description}
                     </Text>
                 </View>
                 <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', marginHorizontal: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginBottom: 5 }}>
@@ -77,15 +148,16 @@ const UserAddTreatment = ({ navigation }) => {
                     </View>
 
                     <Text style={styles.normalTextStyle}>
-                        20$
+                        {route?.params.price + '$'}
                     </Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     <SelectDropdown
                         defaultButtonText='Choose doctor'
-                        data={countries}
+                        data={staff.map((el)=>el.data.name)}
                         onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
+                            console.log(selectedItem, staff[index].id)
+                            setChoosenDoctor(staff[index].id);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
                         buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15 }}
@@ -98,6 +170,7 @@ const UserAddTreatment = ({ navigation }) => {
                         data={day}
                         onSelect={(selectedItem, index) => {
                             console.log(selectedItem, index)
+                            setChoosenDay(day[index]);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
                         buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%' }}
@@ -107,6 +180,7 @@ const UserAddTreatment = ({ navigation }) => {
                         data={mounth}
                         onSelect={(selectedItem, index) => {
                             console.log(selectedItem, index)
+                            setChoosenMounth(mounth[index]);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
                         buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%', marginRight: 5 }}
@@ -116,6 +190,7 @@ const UserAddTreatment = ({ navigation }) => {
                         data={year}
                         onSelect={(selectedItem, index) => {
                             console.log(selectedItem, index)
+                            setChoosenYear(year[index]);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
                         buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%', marginRight: 5 }}
@@ -128,7 +203,7 @@ const UserAddTreatment = ({ navigation }) => {
                     shadowOffset: { height: 7 },
                     shadowOpacity: 1,
                 }}>
-                    <TouchableOpacity
+                    <TouchableOpacity onPress={()=>createRequest(choosenDoctor,route?.params.id,auth?.currentUser?.uid,choosenDay,choosenMounth,choosenYear)}
                         style={{
                             backgroundColor: 'rgba(15, 74, 7, 0.6)',
                             borderRadius: 50,
