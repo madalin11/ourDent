@@ -40,7 +40,7 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
                     snapshot.docs.filter((doc) => {
 
                         if (doc.data().idUser == temp && doc.id == id) {
-                            setColors(doc.data().status)
+                            setColors(doc?.data().status)
                             return true;
                         }
                         return false;

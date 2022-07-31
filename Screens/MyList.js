@@ -112,11 +112,14 @@ const MyList = ({ navigation }) => {
             rating: feedback,
             comment:comment
         }).then(() => {
+            console.log("feedback" + feedback)
+            console.log("rating" + rating)
+            console.log("rating + feedback" + rating + feedback)
             console.log("Feedback has been updated");
         }).catch((error) => alert(error));
-
+      
         await db.collection("peoples").doc(idDoctor).update({
-            rating: (feedback + rating)/2,
+            rating: (+feedback+ +rating)/2 ,
         }).then(() => {
             console.log("Feedback has been updated");
         }).catch((error) => alert(error));

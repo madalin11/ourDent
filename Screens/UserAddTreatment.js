@@ -32,7 +32,7 @@ const UserAddTreatment = ({ navigation, route }) => {
             .collection("peoples")
             .onSnapshot(snapshot => {
                 setStaff(
-                    snapshot.docs.filter((doc) => doc.data().ID == 1 || doc.data().ID == 2
+                    snapshot.docs.filter((doc) => doc.data().ID == 2
                     ).map((doc) => ({
                         id: doc.id,
                         data: doc.data()
@@ -54,7 +54,7 @@ const UserAddTreatment = ({ navigation, route }) => {
         }
         return result;
     }
-    async function createRequest(idDoctor, idTreatment,idUser,choosenDay,choosenMounth,choosenYear,name) {
+    async function createRequest(idDoctor, idTreatment, idUser, choosenDay, choosenMounth, choosenYear, name) {
         if (true) { //will be good if u cheff that all fields are choosen
             let idHistT = makeid(10);
             await db
@@ -65,12 +65,12 @@ const UserAddTreatment = ({ navigation, route }) => {
                     idTreatment: idTreatment,
                     //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                     idUser: idUser,
-                    choosenDay:choosenDay,
-                    choosenMounth:choosenMounth,
-                    choosenYear:choosenYear,
-                    status:'Requested',
-                    name:name,
-                    
+                    choosenDay: choosenDay,
+                    choosenMounth: choosenMounth,
+                    choosenYear: choosenYear,
+                    status: 'Requested',
+                    name: name,
+
 
                 })
                 .then(() => {
@@ -86,8 +86,8 @@ const UserAddTreatment = ({ navigation, route }) => {
                     idTreatment: idTreatment,
                     //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                     idDoctor: idDoctor,
-                    rating:5,
-                    name:name
+                    rating: 5,
+                    name: name
 
                 })
                 .then(() => {
@@ -95,9 +95,9 @@ const UserAddTreatment = ({ navigation, route }) => {
                 })
                 .catch((error) => alert(error));
 
-           navigation.navigate('User home screen',{refreshPage: true});
+            navigation.navigate('User home screen', { refreshPage: true });
         }
-    
+
     }
     return (
         <View style={styles.container}>
@@ -157,13 +157,20 @@ const UserAddTreatment = ({ navigation, route }) => {
                 <View style={{ alignItems: 'center' }}>
                     <SelectDropdown
                         defaultButtonText='Choose doctor'
-                        data={staff.map((el)=>el.data.name)}
+                        data={staff.map((el) => el.data.name)}
                         onSelect={(selectedItem, index) => {
                             console.log(selectedItem, staff[index].id)
                             setChoosenDoctor(staff[index].id);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
-                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15 }}
+                        buttonStyle={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            borderRadius: 15,
+                            shadowColor: '#202020',
+                            shadowRadius: 15,
+                            shadowOffset: { height: 1 },
+                            shadowOpacity: 1,
+                        }}
                     />
                 </View>
 
@@ -176,7 +183,15 @@ const UserAddTreatment = ({ navigation, route }) => {
                             setChoosenDay(day[index]);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
-                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%' }}
+                        buttonStyle={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            borderRadius: 15,
+                            width: '30%',
+                            shadowColor: '#202020',
+                            shadowRadius: 15,
+                            shadowOffset: { height: 1 },
+                            shadowOpacity: 1,
+                        }}
                     />
                     <SelectDropdown
                         defaultButtonText='Mounth'
@@ -186,7 +201,16 @@ const UserAddTreatment = ({ navigation, route }) => {
                             setChoosenMounth(mounth[index]);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
-                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%', marginRight: 5 }}
+                        buttonStyle={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            borderRadius: 15,
+                            width: '30%',
+                            marginRight: 5,
+                            shadowColor: '#202020',
+                            shadowRadius: 15,
+                            shadowOffset: { height: 1 },
+                            shadowOpacity: 1,
+                        }}
                     />
                     <SelectDropdown
                         defaultButtonText='Year'
@@ -196,7 +220,16 @@ const UserAddTreatment = ({ navigation, route }) => {
                             setChoosenYear(year[index]);
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
-                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 15, width: '30%', marginRight: 5 }}
+                        buttonStyle={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            borderRadius: 15,
+                            width: '30%',
+                            marginRight: 5,
+                            shadowColor: '#202020',
+                            shadowRadius: 15,
+                            shadowOffset: { height: 1 },
+                            shadowOpacity: 1,
+                        }}
                     />
 
                 </View>
@@ -206,14 +239,15 @@ const UserAddTreatment = ({ navigation, route }) => {
                     shadowOffset: { height: 7 },
                     shadowOpacity: 1,
                 }}>
-                    <TouchableOpacity onPress={()=>createRequest(choosenDoctor,route?.params.id,auth?.currentUser?.uid,choosenDay,choosenMounth,choosenYear,route?.params.name)}
+                    <TouchableOpacity onPress={() => createRequest(choosenDoctor, route?.params.id, auth?.currentUser?.uid, choosenDay, choosenMounth, choosenYear, route?.params.name)}
                         style={{
                             backgroundColor: 'rgba(15, 74, 7, 0.6)',
                             borderRadius: 50,
                             alignItems: 'center',
                             marginHorizontal: 98,
                             marginTop: 50,
-                            paddingVertical: 5
+                            paddingVertical: 5,
+                            marginBottom: 50
                         }}>
                         <View style={{
                             flexDirection: 'row', alignContent: 'center',
