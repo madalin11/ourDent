@@ -6,7 +6,7 @@ import { BackgroundImage } from 'react-native-elements/dist/config';
 import { db, auth } from '../firebase'
 
 const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
-    const a = { a: 1, b: 2 }
+
     const [messages1, setMessages1] = useState('');
     const temp = auth.currentUser.uid;
     useEffect(() => {
@@ -26,7 +26,14 @@ const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
 
     console.log(messages1)
     return (
-        <ListItem containerStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10 }} style={{ marginBottom: 10, marginHorizontal: 7, borderRadius: 10 }} key={id} onPress={() => enterChat(id, friendName, friendPhoto)}>
+        <ListItem containerStyle={{
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            borderRadius: 10,
+            shadowColor: '#202020',
+            shadowOffset: { height: 10 },
+            shadowOpacity: 0.9,
+            shadowRadius: 10,
+        }} style={{ marginBottom: 10, marginHorizontal: 7, borderRadius: 10 }} key={id} onPress={() => enterChat(id, friendName, friendPhoto)}>
 
             <Avatar
                 rounded

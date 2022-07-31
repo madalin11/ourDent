@@ -41,7 +41,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5
+        paddingVertical: 5,
+        shadowColor:'#202020',
+        shadowOffset:{height:5},
+        shadowOpacity:0.8,
+        shadowRadius:20
 
     },
     treatmName: {

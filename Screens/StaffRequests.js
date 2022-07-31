@@ -17,7 +17,8 @@ const StaffRequests = ({ navigation }) => {
     async function changeStatus(id, state) {
 
         await db.collection("peoples").doc(temp).collection("requests").doc(id).update({
-            status:state
+            status:state,
+            
         })
     }
     function filterZZZ(element) {

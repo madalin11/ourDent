@@ -1,15 +1,54 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackItem from '../components/FeedbackItem';
 import FeedbackUserDetails from '../components/FeedbackUserDetails';
+import { auth, db } from '../firebase';
 
-const FeedbackDetails = ({ navigation }) => {
+const FeedbackDetails = ({ navigation, route }) => {
+  const [ratings, setRatings] = useState([]);
+  const [searchText, setSearchText] = useState('')
+  const [people, setPeople] = useState([])
 
-  const enterFeedback = () => {
-    navigation.navigate('Feedback details screen');
+  function filterZZZ(friend) {
+    try {
+      if (friend.data.name == '') {
+        return true;
+      }
+      try {
+
+        if (friend.data.name.toLowerCase().includes(textSearch.toLowerCase()))
+          return true;
+
+      } catch (err) {
+
+      }
+      return false
+    } catch (err) {
+
+    }
+    return true
   }
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("peoples")
+      .doc(route?.params?.id)
+      .collection("requests")
+      .onSnapshot(snapshot => {
+        setRatings(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data()
+          })))
+
+      }
+
+      )
+
+    return unsubscribe;
+  }, [db])
 
   return (
     <View style={styles.container}>
@@ -30,41 +69,19 @@ const FeedbackDetails = ({ navigation }) => {
           All feedbacks
         </Text>
       </View>
-      <View style={{ marginBottom: 20, marginTop: 10 }}>
-
-        <TextInput
-
-          //onChangeText={(text) => setTextSearch(text)}
-          placeholder='Search' style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
-        >
-
-        </TextInput>
-
-        <TouchableOpacity style={{ position: 'absolute' }} onPress={Keyboard.dismiss}>
-          <Image source={require('../iconsOurDent/searchFeedback.png')} style={{ top: 8, left: 49, width: 30, height: 30, }}></Image>
-        </TouchableOpacity>
-
-      </View>
+      
       <ScrollView style={{ height: '100%' }}>
 
-
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-        <FeedbackUserDetails />
-
-
-
-
-
+        {
+          ratings.map(({ id, data }) => (
+            <FeedbackUserDetails 
+              key={id}
+              id={id}
+              idUser={data.idUser}
+              idStaff={route?.params.id}
+            />
+          ))
+        }
       </ScrollView>
     </View>
   )

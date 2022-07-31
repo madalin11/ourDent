@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,12 +16,12 @@ const Staff = ({ navigation }) => {
         navigation.goBack();
     }
 
-    const enterStaff = (name,id,profilePhoto,phoneNumber) => {
-        navigation.navigate('Staff details screen',{
-            name:name,
-            id:id,
-            profilePhoto:profilePhoto,
-            phoneNumber:phoneNumber,
+    const enterStaff = (name, id, profilePhoto, phoneNumber) => {
+        navigation.navigate('Staff details screen', {
+            name: name,
+            id: id,
+            profilePhoto: profilePhoto,
+            phoneNumber: phoneNumber,
 
         });
     }
@@ -92,9 +92,9 @@ const Staff = ({ navigation }) => {
             </View>
             <ScrollView style={{ height: '100%' }}>
 
-            {
-                    staff.filter(filterZZZ).map(({ id, data: { name, profilePhoto,phoneNumber } }) => (
-                        <StaffItem key={id}enterStaff={enterStaff} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} deleteStaff={deleteStaff}/>
+                {
+                    staff.filter(filterZZZ).map(({ id, data: { name, profilePhoto, phoneNumber } }) => (
+                        <StaffItem key={id} enterStaff={enterStaff} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} deleteStaff={deleteStaff} />
                     ))
                 }
 

@@ -82,7 +82,7 @@ const Users = ({ navigation }) => {
 
         <TextInput
 
-          //onChangeText={(text) => setTextSearch(text)}
+          onChangeText={(text) => setSearchText(text)}
           placeholder='Search' style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
         >
 

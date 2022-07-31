@@ -29,7 +29,7 @@ const FeedbackItem = ({enterFeedback,profilePhoto,name,id,phoneNumber,rating}) =
                 source={require('../iconsOurDent/star.png')}
             />
             <Image
-                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50,tintColor: Math.trunc(rating) >= 5? 'orange':'black' }}
+                style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50,tintColor: Math.trunc(rating) >= 4? 'orange':'black' }}
                 source={require('../iconsOurDent/star.png')}
             />
             <Image
@@ -56,7 +56,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5
+        paddingVertical: 5,
+        shadowColor:'#202020',
+        shadowOffset:{height:5},
+        shadowOpacity:0.8,
+        shadowRadius:20
 
     },
     treatmName: {

@@ -69,7 +69,8 @@ const UserAddTreatment = ({ navigation, route }) => {
                     choosenMounth:choosenMounth,
                     choosenYear:choosenYear,
                     status:'Requested',
-                    name:name
+                    name:name,
+                    
 
                 })
                 .then(() => {
@@ -85,7 +86,7 @@ const UserAddTreatment = ({ navigation, route }) => {
                     idTreatment: idTreatment,
                     //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                     idDoctor: idDoctor,
-                    rating:-1,
+                    rating:5,
                     name:name
 
                 })

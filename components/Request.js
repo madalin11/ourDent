@@ -28,8 +28,8 @@ const Request = ({reqName,userName,id,changeStatus,day,mounth,year,imageLink,sta
                        fontWeight: 'bold', 
                        shadowColor:'#202020',
                        shadowOffset:{height:2},
-                       shadowOpacity:1,
-                       shadowRadius:2,
+                       shadowOpacity:0.6,
+                       shadowRadius:1,
                        alignSelf: 'center',
                        color: status == 'Requested'? 'black': (status == 'In progress'?'blue':(status=='Done'?'green':(status=='Rejected'?'red':'white'))) }}>
                         {status}

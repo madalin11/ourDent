@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackItem from '../components/FeedbackItem';
@@ -7,57 +7,58 @@ import { auth, db } from '../firebase';
 
 const Feedback = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
-    const [feedback, setFeedback] = useState([]);
+  const [feedback, setFeedback] = useState([]);
 
-    const enterFeedback = (name,id,profilePhoto,phoneNumber,rating) => {
-        navigation.navigate('Feedback details screen',{
-            name:name,
-            id:id,
-            profilePhoto:profilePhoto,
-            phoneNumber:phoneNumber,
-            rating:rating
+  const enterFeedback = (name, id, profilePhoto, phoneNumber, rating) => {
+    navigation.navigate('Feedback details screen', {
+      name: name,
+      id: id,
+      profilePhoto: profilePhoto,
+      phoneNumber: phoneNumber,
+      rating: rating,
+  
 
-        });
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("peoples")
+      .onSnapshot(snapshot => {
+        setFeedback(
+          snapshot.docs.filter((doc) => doc.data().ID == 1 || doc.data().ID == 2
+          ).map((doc) => ({
+            id: doc.id,
+            data: doc.data()
+          })))
+        // setSearchabelFriends(friendsToAdd);
+      }
+
+      )
+
+    return unsubscribe;
+  }, [db])
+
+  function filterZZZ(element) {
+    try {
+      if (element.data.name == '') {
+        return false;
+      }
+      try {
+
+        if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
+          return true;
+
+      } catch (err) {
+
+      }
+      return false
+    } catch (err) {
+
     }
+    return true
+  }
 
-    useEffect(() => {
-        const unsubscribe = db
-            .collection("peoples")
-            .onSnapshot(snapshot => {
-                setFeedback(
-                    snapshot.docs.filter((doc) => doc.data().ID == 1 || doc.data().ID == 2
-                    ).map((doc) => ({
-                        id: doc.id,
-                        data: doc.data()
-                    })))
-                // setSearchabelFriends(friendsToAdd);
-            }
-
-            )
-
-        return unsubscribe;
-    }, [db])
-
-    function filterZZZ(element) {
-        try {
-            if (element.data.name == '') {
-                return false;
-            }
-            try {
-
-                if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
-                    return true;
-
-            } catch (err) {
-
-            }
-            return false
-        } catch (err) {
-
-        }
-        return true
-    }
- 
 
   return (
     <View style={styles.container}>
@@ -88,11 +89,11 @@ const Feedback = ({ navigation }) => {
       </View>
       <ScrollView style={{ height: '100%' }}>
 
-      {
-                    feedback.filter(filterZZZ).map(({ id, data: { name, profilePhoto,phoneNumber,rating } }) => (
-                        <FeedbackItem key={id} enterFeedback={enterFeedback} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} rating={rating}/>
-                    ))
-                }
+        {
+          feedback.filter(filterZZZ).map(({ id, data: { name, profilePhoto, phoneNumber, rating } }) => (
+            <FeedbackItem key={id} enterFeedback={enterFeedback} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} rating={rating} />
+          ))
+        }
 
 
 

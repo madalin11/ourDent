@@ -107,9 +107,16 @@ const MyList = ({ navigation }) => {
         }
         return true
     }
-    async function addFeedback(id, feedback) {
+    async function addFeedback(id, feedback,comment,idDoctor,rating) {
         await db.collection("peoples").doc(temp).collection("myRequests").doc(id).update({
-            rating: feedback
+            rating: feedback,
+            comment:comment
+        }).then(() => {
+            console.log("Feedback has been updated");
+        }).catch((error) => alert(error));
+
+        await db.collection("peoples").doc(idDoctor).update({
+            rating: (feedback + rating)/2,
         }).then(() => {
             console.log("Feedback has been updated");
         }).catch((error) => alert(error));

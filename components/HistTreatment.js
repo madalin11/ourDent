@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity,TextInput } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import SelectDropdown from 'react-native-select-dropdown';
 import { auth, db } from '../firebase';
@@ -11,6 +11,7 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
     const [status, setStatus] = useState([]);
     const temp = auth.currentUser.uid;
     const [fl, setfl] = useState('');
+    const [comment, setComment] = useState('')
 
     useEffect(() => {
         if (status[0]?.data.choosenDay == undefined) {
@@ -85,6 +86,16 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
                 <Text style={{ fontFamily: 'Times New Roman', fontSize: 16, color: 'rgba(10,41,0,0.9)' }}>
                     {'Date: ' + status[0]?.data.choosenDay + ' ' + status[0]?.data.choosenMounth + ' ' + status[0]?.data.choosenYear + ' '}
                 </Text>
+                
+                <TextInput
+                    
+                    onChangeText={(text) => setComment(text)}
+                    placeholder='Write an comment'
+                    
+                    style={{ fontSize: 18, height: 30,paddingHorizontal:10, marginBottom: 2,paddingVertical:5,backgroundColor:"rgba(24, 82, 7,0.3)", marginTop: 5,width:170, borderRadius: 10 }}
+                >
+
+                </TextInput>
 
             </View>
             <View style={{}}>
@@ -104,7 +115,7 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
                         buttonTextStyle={{ fontFamily: 'Arial', fontSize: 16 }}
                         data={feedCount.map((elm) => elm + ' ' + 'stars')}
                         onSelect={(selectedItem, index) => {
-                            addFeedback(id, selectedItem.split(' ')[0]);
+                            addFeedback(id, selectedItem.split(' ')[0],comment,idDoctor,rating);
                             console.log(selectedItem, index)
                         }}
                         dropdownStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 5 }}
