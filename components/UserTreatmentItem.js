@@ -2,26 +2,29 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 
-const UserTreatmentItem = ({enterTreatmentDetails,name,description , imageLink,id,price}) => {
+const UserTreatmentItem = ({ enterTreatmentDetails, name, description, imageLink, id, price }) => {
     return (
-        <TouchableOpacity onPress={()=>enterTreatmentDetails(name,description,imageLink,id,price)}>
+        <TouchableOpacity onPress={() => enterTreatmentDetails(name, description, imageLink, id, price)}>
             <View style={styles.container}>
-            <Image
-                style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                source={{uri:imageLink || '../iconsOurDent/Logo.png'}}
-            />
+                <Image
+                    style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
+                    source={{ uri: imageLink || '../iconsOurDent/Logo.png' }}
+                />
 
-            <View style={{flex:1}}>
-                <Text style={styles.treatmName}>
-                {name}
-            </Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.treatmName}>
+                        {name}
+                    </Text>
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={{fontFamily:'Times New Roman'}}>
+                        {'Description: '+ description}
+                    </Text>
+                </View>
+
+
+
             </View>
-            
-           
-
-        </View>
         </TouchableOpacity>
-        
+
     )
 }
 
@@ -37,7 +40,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5
+        paddingVertical: 5,
+        shadowColor:'#202020',
+        shadowOffset:{height:10},
+        shadowOpacity:0.8,
+        shadowRadius:20
 
     },
     treatmName: {

@@ -54,7 +54,7 @@ const UserAddTreatment = ({ navigation, route }) => {
         }
         return result;
     }
-    async function createRequest(idDoctor, idTreatment,idUser,choosenDay,choosenMounth,choosenYear) {
+    async function createRequest(idDoctor, idTreatment,idUser,choosenDay,choosenMounth,choosenYear,name) {
         if (true) { //will be good if u cheff that all fields are choosen
             let idHistT = makeid(10);
             await db
@@ -68,7 +68,8 @@ const UserAddTreatment = ({ navigation, route }) => {
                     choosenDay:choosenDay,
                     choosenMounth:choosenMounth,
                     choosenYear:choosenYear,
-                    status:'Requested'
+                    status:'Requested',
+                    name:name
 
                 })
                 .then(() => {
@@ -84,7 +85,8 @@ const UserAddTreatment = ({ navigation, route }) => {
                     idTreatment: idTreatment,
                     //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                     idDoctor: idDoctor,
-                    rating:-1
+                    rating:-1,
+                    name:name
 
                 })
                 .then(() => {
@@ -203,7 +205,7 @@ const UserAddTreatment = ({ navigation, route }) => {
                     shadowOffset: { height: 7 },
                     shadowOpacity: 1,
                 }}>
-                    <TouchableOpacity onPress={()=>createRequest(choosenDoctor,route?.params.id,auth?.currentUser?.uid,choosenDay,choosenMounth,choosenYear)}
+                    <TouchableOpacity onPress={()=>createRequest(choosenDoctor,route?.params.id,auth?.currentUser?.uid,choosenDay,choosenMounth,choosenYear,route?.params.name)}
                         style={{
                             backgroundColor: 'rgba(15, 74, 7, 0.6)',
                             borderRadius: 50,

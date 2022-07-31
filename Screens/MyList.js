@@ -33,6 +33,9 @@ const MyList = ({ navigation }) => {
         return unsubscribe;
     }, [db])
 
+    
+
+
     useEffect(() => {
         const unsubscribe = db
             .collection("treatments")
@@ -144,7 +147,7 @@ const MyList = ({ navigation }) => {
             <ScrollView style={{ height: '100%' }}>
 
                 {
-                    histTreatm.map(({ id, data }, index) => (
+                    histTreatm.filter(filterZZZ).map(({ id, data }, index) => (
                         <HistTreatment
                             key={id}
                             rating={histTreatm[index]?.data.rating}
@@ -157,10 +160,6 @@ const MyList = ({ navigation }) => {
                         />
                     ))
                 }
-
-
-
-
             </ScrollView>
         </View>
 

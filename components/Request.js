@@ -2,12 +2,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 
-const Request = () => {
-    const day = 10;
-    const mounth = 'September';
-    const year = 2022;
+const Request = ({reqName,userName,id,changeStatus,day,mounth,year,imageLink,status}) => {
+    
     return (
-        <View style={{
+        <View key={id} style={{
             shadowColor: '#202020',
             shadowOffset: { height: 5 },
             shadowOpacity: 0.4,
@@ -16,21 +14,25 @@ const Request = () => {
             <View style={styles.container}>
                 <Image
                     style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
-                    source={require('../iconsOurDent/Logo.png')}
+                    source={{uri:imageLink}}
                 />
 
                 <View style={{ flex: 1 }}>
                     <Text style={styles.treatmName}>
-                        TreatmentItem
+                        {reqName}
                     </Text>
                 </View>
                 <Text style={{ marginRight: 10,
                      fontFamily: 'Times New Roman',
                       fontSize: 18,
                        fontWeight: 'bold', 
+                       shadowColor:'#202020',
+                       shadowOffset:{height:2},
+                       shadowOpacity:1,
+                       shadowRadius:2,
                        alignSelf: 'center',
-                       color:'blue' }}>
-                        Pending
+                       color: status == 'Requested'? 'black': (status == 'In progress'?'blue':(status=='Done'?'green':(status=='Rejected'?'red':'white'))) }}>
+                        {status}
                     </Text>
 
 
@@ -66,7 +68,7 @@ const Request = () => {
                             fontSize: 16,
                             flex: 1
                         }}>
-                        George Andrei
+                        {userName}
                     </Text>
                 </View>
 
@@ -83,7 +85,7 @@ const Request = () => {
                         shadowOpacity: 1,
                         shadowRadius: 4
                     }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>changeStatus(id,'In progress')}>
                             <Image
                                 style={{ tintColor: 'blue', alignSelf: 'center', width: 24, height: 24, borderRadius: 50 }}
                                 source={require('../iconsOurDent/inprogress.png')}
@@ -103,7 +105,7 @@ const Request = () => {
                         shadowOpacity: 0.9,
                         shadowRadius: 4
                     }}>
-                        <TouchableOpacity style={{ flex: 1 }}>
+                        <TouchableOpacity onPress={()=>changeStatus(id,'Done')} style={{ flex: 1 }}>
                             <Image
                                 style={{ tintColor: 'green', alignSelf: 'center', width: 24, height: 24, borderRadius: 50 }}
                                 source={require('../iconsOurDent/done.png')}
@@ -123,13 +125,13 @@ const Request = () => {
                         shadowOpacity: 0.9,
                         shadowRadius: 4
                     }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>changeStatus(id,'Rejected')}>
                             <Image
                                 style={{ alignSelf: 'center', tintColor: 'red', width: 24, height: 24, borderRadius: 50 }}
                                 source={require('../iconsOurDent/unavailable.png')}
                             />
                             <Text style={{ alignSelf: 'center' }}>
-                                Denied
+                                Rejected
                             </Text>
                         </TouchableOpacity>
                     </View>

@@ -1,17 +1,92 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Keyboard } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import UserTreatmentItem from '../components/UserTreatmentItem';
 import Request from '../components/Request';
-
+import { auth, db } from '../firebase';
 
 const StaffRequests = ({ navigation }) => {
+    const temp = auth?.currentUser?.uid;
+    const [requests, setRequests] = useState([])
+    const [people, setPeople] = useState([])
+    const [searchText, setSearchText] = useState('')
+    const [treatments, setTreatments] = useState([])
 
-    const enterTreatmentDetails = () => {
-        navigation.navigate('User add treatment screen');
+
+    async function changeStatus(id, state) {
+
+        await db.collection("peoples").doc(temp).collection("requests").doc(id).update({
+            status:state
+        })
     }
+    function filterZZZ(element) {
+        try {
+            if (element.data.name == '') {
+                return false;
+            }
+            try {
 
+                if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
+                    return true;
+
+            } catch (err) {
+
+            }
+            return false
+        } catch (err) {
+
+        }
+        return true
+    }
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .doc(temp)
+            .collection("requests")
+            .onSnapshot(snapshot => {
+                setRequests(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+
+            }
+
+            )
+        return unsubscribe;
+    }, [db])
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("peoples")
+            .onSnapshot(snapshot => {
+                setPeople(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+
+            }
+
+            )
+        return unsubscribe;
+    }, [db])
+    useEffect(() => {
+        const unsubscribe = db
+            .collection("treatments")
+            .onSnapshot(snapshot => {
+                setTreatments(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        data: doc.data()
+                    })))
+
+            }
+
+            )
+        console.log(treatments)
+        return unsubscribe;
+    }, [db])
     return (
 
         <View style={styles.container}>
@@ -20,17 +95,17 @@ const StaffRequests = ({ navigation }) => {
                 colors={['yellow', 'green', 'white']}
                 style={styles.background}
             />
-            <View style={{  marginBottom: 20, marginTop: 100, alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}>
+            <View style={{ marginBottom: 20, marginTop: 100, alignSelf: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Text style={styles.headerTextStyle}>
                     Requests
                 </Text>
-                
+
             </View>
-            <View style={{ marginBottom: 20, marginTop: 10,backgroundColor:'rgba(255,255,255,0.0001)' }}>
+            <View style={{ marginBottom: 20, marginTop: 10, backgroundColor: 'rgba(255,255,255,0.0001)' }}>
 
                 <TextInput
 
-                    //onChangeText={(text) => setTextSearch(text)}
+                    onChangeText={(text) => setSearchText(text)}
                     placeholder='Search'
                     style={{ fontSize: 18, backgroundColor: 'white', height: 45, marginBottom: 1, paddingLeft: 55, marginHorizontal: 35, marginTop: 0, borderRadius: 10 }}
                 >
@@ -43,18 +118,22 @@ const StaffRequests = ({ navigation }) => {
 
             </View>
             <ScrollView style={{ height: '100%' }}>
-
-                <Request/>
-                <Request/>
-                <Request/>
-                <Request/>
-                <Request/>
-                <Request/>
-                <Request/>
-                <Request/>
-
-
-
+                {
+                    requests.filter(filterZZZ).map(({ id, data }, index) => (
+                        <Request
+                            key={id}
+                            reqName={data.name}
+                            userName={people.filter((elm) => elm.id == data.idUser)[0]?.data?.name}
+                            id={id}
+                            changeStatus={changeStatus}
+                            day={data.choosenDay}
+                            mounth={data.choosenMounth}
+                            year={data.choosenYear}
+                            imageLink={treatments.filter((elm) => elm.id == data.idTreatment)[0]?.data?.imageLink}
+                            status={data.status}
+                        />
+                    ))
+                }
             </ScrollView>
         </View>
 

@@ -62,9 +62,9 @@ const UserHome = ({navigation}) => {
                             }}
                         />
                     </View>
-                ),tabBarButton:{
+                ),
                     
-                }
+                
             }}
             />
 

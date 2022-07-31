@@ -3,13 +3,31 @@ import React, { useState, useEffect } from 'react'
 import SelectDropdown from 'react-native-select-dropdown';
 import { auth, db } from '../firebase';
 
-const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, idDoctor}) => {
+const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, idDoctor }) => {
     const [statusColor, setStatusColor] = useState('black')
 
     const showChoseFeedback = 'flex'
     const feedCount = [1, 2, 3, 4, 5];
     const [status, setStatus] = useState([]);
     const temp = auth.currentUser.uid;
+    const [fl, setfl] = useState('');
+
+    useEffect(() => {
+        if (status[0]?.data.choosenDay == undefined) {
+            setfl(Math.random())
+        }
+    }, [db])
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (status[0]?.data.choosenDay == undefined) {
+                setfl(Math.random())
+            }
+          console.log('This will run after 1 second!')
+        }, 100);
+        return () => clearTimeout(timer);
+      }, [fl]);
+      
 
     useEffect(() => {
         const unsubscribe = db
@@ -23,8 +41,6 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
                         if (doc.data().idUser == temp && doc.id == id) {
                             setColors(doc.data().status)
                             return true;
-
-
                         }
                         return false;
                     }).map((doc) => ({
@@ -36,7 +52,7 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
 
             )
         return unsubscribe;
-    }, [db])
+    }, [db, dataTreatm?.imageLink,fl])
 
     function setColors(status) {
 
