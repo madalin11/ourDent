@@ -1,14 +1,13 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react'
-import { ImageBackground } from 'react-native';
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { ListItem, Avatar, icon } from 'react-native-elements'
-import { BackgroundImage } from 'react-native-elements/dist/config';
+import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
+import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
 const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
 
     const [messages1, setMessages1] = useState('');
     const temp = auth.currentUser.uid;
+    
     useEffect(() => {
         const unsubscribe = db.collection("peoples").doc(temp).collection("doctors").doc(id).collection("messages").onSnapshot((snapshot) => setMessages1(
             snapshot.docs.map(doc => ({
@@ -22,9 +21,6 @@ const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
         return unsubscribe;
     }, [])
 
-
-
-    console.log(messages1)
     return (
         <ListItem containerStyle={{
             backgroundColor: 'rgba(255, 255, 255, 0.5)',

@@ -1,6 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Keyboard } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import HistTreatment from '../components/HistTreatment';
 import { auth, db } from '../firebase';
@@ -11,8 +10,7 @@ const MyList = ({ navigation }) => {
     const [histTreatm3, setHistTreatm3] = useState([]);
     const temp = auth?.currentUser?.uid;
     const [searchText, setSearchText] = useState('')
-    
-    
+
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -28,13 +26,8 @@ const MyList = ({ navigation }) => {
             }
 
             )
-        console.log('ceva')
-        console.log(histTreatm)
         return unsubscribe;
     }, [db])
-
-    
-
 
     useEffect(() => {
         const unsubscribe = db
@@ -53,14 +46,11 @@ const MyList = ({ navigation }) => {
                         id: doc.id,
                         data: doc.data()
                     })))
-
             }
-
             )
-        console.log('ceva1')
-        console.log(histTreatm2)
         return unsubscribe;
     }, [histTreatm])
+
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -82,11 +72,8 @@ const MyList = ({ navigation }) => {
             }
 
             )
-        console.log('ceva2')
-        console.log(histTreatm3)
         return unsubscribe;
     }, [histTreatm])
-
 
     function filterZZZ(element) {
         try {
@@ -94,7 +81,6 @@ const MyList = ({ navigation }) => {
                 return false;
             }
             try {
-
                 if (element.data.name.toLowerCase().includes(searchText.toLowerCase()))
                     return true;
 
@@ -107,19 +93,17 @@ const MyList = ({ navigation }) => {
         }
         return true
     }
-    async function addFeedback(id, feedback,comment,idDoctor,rating) {
+
+    async function addFeedback(id, feedback, comment, idDoctor, rating) {
         await db.collection("peoples").doc(temp).collection("myRequests").doc(id).update({
             rating: feedback,
-            comment:comment
+            comment: comment
         }).then(() => {
-            console.log("feedback" + feedback)
-            console.log("rating" + rating)
-            console.log("rating + feedback" + rating + feedback)
             console.log("Feedback has been updated");
         }).catch((error) => alert(error));
-      
+
         await db.collection("peoples").doc(idDoctor).update({
-            rating: (+feedback+ +rating)/2 ,
+            rating: (+feedback + +rating) / 2,
         }).then(() => {
             console.log("Feedback has been updated");
         }).catch((error) => alert(error));
@@ -182,10 +166,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: 'center',
-        //alignItems: 'center',
-
-
-
     },
     headerTextStyle: {
         color: 'white',

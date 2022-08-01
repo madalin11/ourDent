@@ -1,13 +1,12 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
 
 const FriendListItem = ({ friendName, id, friendPhoto, func }) => {
-    const temp = auth.currentUser.uid;
-    const a = require('../Icons/addfr.png')
-    const b = require('../Icons/newmsg.png')
+
+    const b = require('../iconsOurDent/newmsg.png')
 
     return (
         <ListItem key={id} containerStyle={{ backgroundColor: 'transparent', borderRadius: 30, marginBottom: 10, marginTop: 10 }}>
@@ -20,7 +19,7 @@ const FriendListItem = ({ friendName, id, friendPhoto, func }) => {
                     </Text>
                 </View>
                 <TouchableOpacity onPress={() => func(id)} style={{ flex: 1, alignSelf: 'center' }}>
-                    <Image style={{ height: 20, width: 20 }} source={ b} />
+                    <Image style={{ height: 20, width: 20 }} source={b} />
                 </TouchableOpacity>
             </View>
 

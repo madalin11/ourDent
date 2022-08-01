@@ -1,8 +1,6 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Keyboard } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
-import UserTreatmentItem from '../components/UserTreatmentItem';
 import Request from '../components/Request';
 import { auth, db } from '../firebase';
 
@@ -17,8 +15,8 @@ const StaffRequests = ({ navigation }) => {
     async function changeStatus(id, state) {
 
         await db.collection("peoples").doc(temp).collection("requests").doc(id).update({
-            status:state,
-            
+            status: state,
+
         })
     }
     function filterZZZ(element) {
@@ -85,7 +83,7 @@ const StaffRequests = ({ navigation }) => {
             }
 
             )
-        console.log(treatments)
+     
         return unsubscribe;
     }, [db])
     return (
@@ -147,10 +145,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: 'center',
-        //alignItems: 'center',
-
-
-
     },
     headerTextStyle: {
         color: 'white',

@@ -1,9 +1,8 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackItem from '../components/FeedbackItem';
-import { auth, db } from '../firebase';
+import { db } from '../firebase';
 
 const Feedback = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
@@ -16,8 +15,6 @@ const Feedback = ({ navigation }) => {
       profilePhoto: profilePhoto,
       phoneNumber: phoneNumber,
       rating: rating,
-  
-
     });
   }
 
@@ -31,7 +28,6 @@ const Feedback = ({ navigation }) => {
             id: doc.id,
             data: doc.data()
           })))
-        // setSearchabelFriends(friendsToAdd);
       }
 
       )
@@ -94,10 +90,6 @@ const Feedback = ({ navigation }) => {
             <FeedbackItem key={id} enterFeedback={enterFeedback} name={name} id={id} profilePhoto={profilePhoto} phoneNumber={phoneNumber} rating={rating} />
           ))
         }
-
-
-
-
       </ScrollView>
     </View>
   )

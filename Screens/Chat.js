@@ -101,13 +101,13 @@ const Chat = ({ navigation }) => {
 
       <View style={{ flexDirection: 'row', marginTop: 85 }}>
         <TouchableOpacity onPress={handleSignOut} style={{ alignSelf: 'center', marginLeft: 20 }}>
-          <Image style={{ width: 20, height: 20, tintColor: 'black' }} source={require('../Icons/leftarrow.png')}></Image>
+          <Image style={{ width: 20, height: 20, tintColor: 'black' }} source={require('../iconsOurDent/leftarrow.png')}></Image>
         </TouchableOpacity>
         <Text style={{ fontSize: 40, flex: 1, textAlign: 'center', color: 'white', fontWeight: '500', fontFamily: 'Times New Roman', shadowColor: '#202020', shadowOpacity: 1, shadowOffset: { height: 2 } }}>
           Chat
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate("Add chat")} style={{ alignSelf: 'center', marginRight: 20 }}>
-          <Image style={{ width: 20, height: 20 }} source={require('../Icons/newchat.png')}></Image>
+          <Image style={{ width: 20, height: 20 }} source={require('../iconsOurDent/newchat.png')}></Image>
         </TouchableOpacity>
       </View>
 

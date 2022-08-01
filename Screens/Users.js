@@ -2,8 +2,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboa
 import React, { useState, useEffect } from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationContainer } from '@react-navigation/native';
-import { auth, db } from '../firebase';
+import { db } from '../firebase';
 
 const Users = ({ navigation }) => {
 
@@ -14,7 +13,7 @@ const Users = ({ navigation }) => {
     db.collection("peoples").doc(id).delete().then(() => {
       console.log("User successfuly deleted");
     }).catch((error) => alert(error));
-    
+
   }
 
   const enterUserDetails = (name, id, profilePhoto, phoneNumber) => {
@@ -37,7 +36,7 @@ const Users = ({ navigation }) => {
             id: doc.id,
             data: doc.data()
           })))
-        // setSearchabelFriends(friendsToAdd);
+    
       }
 
       )
@@ -114,10 +113,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
-    //alignItems: 'center',
-
-
-
   },
   headerTextStyle: {
     color: 'white',

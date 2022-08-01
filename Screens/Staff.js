@@ -2,8 +2,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboa
 import React, { useEffect, useState } from 'react'
 import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationContainer } from '@react-navigation/native';
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 
 const Staff = ({ navigation }) => {
     const [searchText, setSearchText] = useState('');
@@ -36,7 +35,7 @@ const Staff = ({ navigation }) => {
                         id: doc.id,
                         data: doc.data()
                     })))
-                // setSearchabelFriends(friendsToAdd);
+
             }
 
             )
@@ -111,10 +110,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: 'center',
-        //alignItems: 'center',
-
-
-
     },
     headerTextStyle: {
         color: 'white',

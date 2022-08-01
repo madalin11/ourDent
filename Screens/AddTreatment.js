@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 
 const AddTreatment = ({ navigation }) => {
     const scrollViewRef = useRef();
@@ -56,7 +56,7 @@ const AddTreatment = ({ navigation }) => {
                     <TouchableOpacity style={{ marginTop: 60, marginLeft: 15, marginRight: -15 }} onPress={() => navigation.navigate('Tab navigator screen')}>
                         <Image
                             style={{ alignSelf: 'flex-start', width: 22, height: 22 }}
-                            source={require('../Icons/leftarrow.png')} />
+                            source={require('../iconsOurDent/leftarrow.png')} />
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 10, marginBottom: 40, alignItems: 'center', alignSelf: 'center' }}>

@@ -1,15 +1,15 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Keyboard } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import UserTreatmentItem from '../components/UserTreatmentItem';
-import { auth, db } from '../firebase';
+import { db } from '../firebase';
 
 const UserTreatment = ({ navigation }) => {
 
     const [treatments, setTreatments] = useState([]);
     const [searchText, setSearchText] = useState('');
-    const enterTreatmentDetails = (name,description, imageLink, id,price) => {
+
+    const enterTreatmentDetails = (name, description, imageLink, id, price) => {
         navigation.navigate('User add treatment screen', {
             id: id,
             name: name,
@@ -103,10 +103,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: 'center',
-        //alignItems: 'center',
-
-
-
     },
     headerTextStyle: {
         color: 'white',

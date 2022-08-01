@@ -1,9 +1,6 @@
-import { StyleSheet, Text, View, Image, TouchableOpacityBase } from 'react-native'
-
+import { StyleSheet, View, Image } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import AdminHome from './AdminHome';
 import Treatments from './Treatments';
 import Staff from './Staff';
 import Feedback from './Feedback';
@@ -12,9 +9,9 @@ import Chat from './Chat';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = ({navigation}) => {
+const TabNavigator = ({ navigation }) => {
     return (
-        <Tab.Navigator screenOptions={{ tabBarStyle:{backgroundColor:'rgba(0, 255, 0, 0.1)' } ,headerShown: false }}  >
+        <Tab.Navigator screenOptions={{ tabBarStyle: { backgroundColor: 'rgba(0, 255, 0, 0.1)' }, headerShown: false }}  >
             <Tab.Screen name="Chat" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
@@ -28,7 +25,7 @@ const TabNavigator = ({navigation}) => {
                         />
                     </View>
                 ),
-                
+
             }}
             />
             <Tab.Screen name="Treatments" component={Treatments} options={{

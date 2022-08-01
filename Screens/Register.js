@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState, useEffect } from 'react';
 import {auth,db} from '../firebase';
-import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native'
+import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
 
 
 const Register = ({ navigation }) => {
@@ -14,6 +14,7 @@ const Register = ({ navigation }) => {
     const [photoUrl, setPhotoUrl] = useState('');
     const [memberID, setMemberID] = useState('');
     const [flagReg, setflagReg] = useState('')
+
     function checkTextInput() {
         if (!firstName.trim()) {
             alert('Please Enter First Name');
@@ -43,6 +44,7 @@ const Register = ({ navigation }) => {
 
         return true;
     };
+
     async function createPeople(temp, name, photo) {
         await db.collection("peoples").doc(temp).set({
             email:email,
@@ -72,6 +74,7 @@ const Register = ({ navigation }) => {
 
         return unsubscribe
     }, [flagReg])
+
     const handleSignUp = () => {
         if (checkTextInput() == true) {
 
@@ -117,7 +120,7 @@ const Register = ({ navigation }) => {
                         <TouchableOpacity
                             raised onPress={() => navigation.navigate( "Login screen" )}
                         >
-                            <Image source={require('../Icons/leftarrow.png')} style={{ marginTop: 20, marginLeft: 10, width: 20, height: 20, marginBottom: 20 }}></Image>
+                            <Image source={require('../iconsOurDent/leftarrow.png')} style={{ marginTop: 20, marginLeft: 10, width: 20, height: 20, marginBottom: 20 }}></Image>
                         </TouchableOpacity>
                     </View>
                     <Text style={{ marginBottom: 50, fontSize: 30, textAlign: 'center', color: 'white', fontWeight: 'bold',fontFamily:'Times New Roman',shadowColor:'#202020',shadowOpacity:1,shadowOffset:{height:3},shadowRadius:2 }}>
@@ -187,7 +190,6 @@ const Register = ({ navigation }) => {
                         value={memberID}
                         onChangeText={text => setMemberID(text)}
                         style={styles.input}
-                        //secureTextEntry
                         onSubmitEditing={handleSignUp}
                     />
                 </View>
@@ -227,7 +229,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        //alignContent:'center',
         backgroundColor: '#ADD8E6',
 
 
@@ -259,7 +260,6 @@ const styles = StyleSheet.create({
         paddingLeft: 70,
         paddingRight: 70,
         alignSelf: 'center',
-        //justifyContent: 'center',
         alignItems: 'center',
         marginTop: 70,
 

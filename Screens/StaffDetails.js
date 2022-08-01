@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
-import React, { useRef ,useState} from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native'
+import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 
-const StaffDetails = ({ navigation,route }) => {
+const StaffDetails = ({ navigation, route }) => {
     const scrollViewRef = useRef();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -19,13 +19,11 @@ const StaffDetails = ({ navigation,route }) => {
     }
     async function updateStaff(id) {
         await db.collection("peoples").doc(id).update({
-            name: firstName + ' ' +  lastName,
+            name: firstName + ' ' + lastName,
             phoneNumber: phoneNumber,
-            profilePhoto:profilePhoto,
-
-
+            profilePhoto: profilePhoto,
         })
-        
+
         navigation.goBack();
     }
 
@@ -50,7 +48,7 @@ const StaffDetails = ({ navigation,route }) => {
                     <TouchableOpacity style={{ marginTop: 60, marginLeft: 15, marginRight: -15 }} onPress={() => navigation.navigate('Tab navigator screen')}>
                         <Image
                             style={{ alignSelf: 'flex-start', width: 22, height: 22 }}
-                            source={require('../Icons/leftarrow.png')} />
+                            source={require('../iconsOurDent/leftarrow.png')} />
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 10, marginBottom: 40, alignItems: 'center', alignSelf: 'center' }}>
@@ -118,7 +116,7 @@ const StaffDetails = ({ navigation,route }) => {
 
                         <TextInput
                             placeholder={route?.params.profilePhoto}
-                            
+
 
                             //value={firstName}
                             onChangeText={text => setProfilePhoto(text)}
@@ -131,7 +129,7 @@ const StaffDetails = ({ navigation,route }) => {
                         alignSelf: 'center',
                         marginTop: 200
                     }}>
-                        <TouchableOpacity onPress={()=>updateStaff(route?.params.id)} >
+                        <TouchableOpacity onPress={() => updateStaff(route?.params.id)} >
                             <View style={{
                                 backgroundColor: 'rgba(255, 255, 255, 0.5)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,
@@ -145,7 +143,7 @@ const StaffDetails = ({ navigation,route }) => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={()=>deleteStaff(route?.params.id)}>
+                        <TouchableOpacity onPress={() => deleteStaff(route?.params.id)}>
                             <View style={{
                                 backgroundColor: 'rgba(204, 12, 12, 0.7)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,

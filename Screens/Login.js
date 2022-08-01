@@ -47,6 +47,7 @@ const Login = ({ navigation }) => {
 
         return unsubscribe
     }, [memberID])
+
     const handleLogin = () => {
         auth
             .signInWithEmailAndPassword(email, password)
@@ -129,7 +130,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        //alignContent:'center',
         backgroundColor: '#ADD8E6',
 
 
@@ -173,9 +173,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowOffset: { width: 0, height: 20 },
         borderWidth: 1,
-
-
-
     },
     buttonOutline: {
         backgroundColor: '#cefa69',

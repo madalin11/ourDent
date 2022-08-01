@@ -2,7 +2,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'rea
 import React, { useState, useEffect } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import SelectDropdown from 'react-native-select-dropdown';
-import DatePicker from 'react-native-date-picker'
 import { auth, db } from '../firebase';
 
 const UserAddTreatment = ({ navigation, route }) => {
@@ -26,7 +25,7 @@ const UserAddTreatment = ({ navigation, route }) => {
         'December']
     const year = ['2022', '2023', '2024', '2025'];
     const day = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-    const defaultValue = "Medic";
+
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -37,7 +36,7 @@ const UserAddTreatment = ({ navigation, route }) => {
                         id: doc.id,
                         data: doc.data()
                     })))
-                // setSearchabelFriends(friendsToAdd);
+
             }
 
             )
@@ -55,7 +54,7 @@ const UserAddTreatment = ({ navigation, route }) => {
         return result;
     }
     async function createRequest(idDoctor, idTreatment, idUser, choosenDay, choosenMounth, choosenYear, name) {
-        if (true) { //will be good if u cheff that all fields are choosen
+        if (true) {
             let idHistT = makeid(10);
             await db
                 .collection("peoples")
@@ -63,7 +62,6 @@ const UserAddTreatment = ({ navigation, route }) => {
                 .doc(idHistT)
                 .set({
                     idTreatment: idTreatment,
-                    //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                     idUser: idUser,
                     choosenDay: choosenDay,
                     choosenMounth: choosenMounth,
@@ -84,7 +82,6 @@ const UserAddTreatment = ({ navigation, route }) => {
                 .doc(idHistT)
                 .set({
                     idTreatment: idTreatment,
-                    //timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                     idDoctor: idDoctor,
                     rating: 5,
                     name: name
@@ -110,7 +107,7 @@ const UserAddTreatment = ({ navigation, route }) => {
                 <TouchableOpacity style={{ marginTop: 60, marginLeft: 15, marginRight: -15 }} onPress={() => navigation.navigate('User home screen')}>
                     <Image
                         style={{ alignSelf: 'flex-start', width: 22, height: 22 }}
-                        source={require('../Icons/leftarrow.png')} />
+                        source={require('../iconsOurDent/leftarrow.png')} />
                 </TouchableOpacity>
             </View>
             <View style={{ marginTop: 10, marginBottom: 40, alignItems: 'center', alignSelf: 'center' }}>
@@ -278,9 +275,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: 'center',
-
-
-
     },
     background: {
         position: 'absolute',

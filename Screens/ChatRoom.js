@@ -1,20 +1,18 @@
 import React, { useLayoutEffect, useState, useRef, useEffect } from 'react'
-import { StyleSheet, Text, View, Modal, TouchableOpacity, KeyboardAvoidingView, Pressable, PlatformColor, ScrollView, TextInput, TouchableOpacityBase, Keyboard, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, ScrollView, TextInput, Keyboard, Image } from 'react-native'
 import firebase from 'firebase/compat/app';
 import { Ionicons } from "@expo/vector-icons"
 import { SafeAreaView } from 'react-native-safe-area-context'
-
 import { LinearGradient } from 'expo-linear-gradient';
-
 import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
 const ChatRoom = ({ navigation, route }) => {
     const temp = auth.currentUser.uid;
     const current = route.params.id;
-    const [hasPermission, setHasPermission] = useState(null);
-    
     const [input, setInput] = useState('');
+    const [messages, setMessages] = useState([])
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: () => (
@@ -44,6 +42,7 @@ const ChatRoom = ({ navigation, route }) => {
         })
 
     }, [navigation, route])
+
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -54,7 +53,7 @@ const ChatRoom = ({ navigation, route }) => {
         }
         return result;
     }
-    const [messages, setMessages] = useState([])
+
     useLayoutEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -70,7 +69,7 @@ const ChatRoom = ({ navigation, route }) => {
             ))
         return unsubscribe;
     }, [route, navigation])
-    const snapCamera = route.params.snapCamera;
+    
     async function sendMessage(id) {
         if (checkTextInput()) {
             await db
@@ -85,7 +84,7 @@ const ChatRoom = ({ navigation, route }) => {
                     uid: temp
                 })
                 .then(() => {
-                    console.log("merge1");
+                    
                 })
                 .catch((error) => alert(error));
 
@@ -101,7 +100,7 @@ const ChatRoom = ({ navigation, route }) => {
                     uid: temp
                 })
                 .then(() => {
-                    console.log("merge2");
+                    
                 })
                 .catch((error) => alert(error));
 
@@ -113,7 +112,7 @@ const ChatRoom = ({ navigation, route }) => {
                     lastMessage: input
                 })
                 .then(() => {
-                    console.log("merge1");
+                    
                 })
                 .catch((error) => alert(error));
 
@@ -125,7 +124,7 @@ const ChatRoom = ({ navigation, route }) => {
                     lastMessage: input,
                 })
                 .then(() => {
-                    console.log("merge2");
+                   
                 })
                 .catch((error) => alert(error));
         }
@@ -140,21 +139,9 @@ const ChatRoom = ({ navigation, route }) => {
         }
         return true;
     }
-    function formatDate(date) {
-        var year = date.getFullYear(),
-            month = date.getMonth() + 1, // months are zero indexed
-            day = date.getDate(),
-            hour = date.getHours(),
-            minute = date.getMinutes(),
-            second = date.getSeconds(),
-            hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
-            minuteFormatted = minute < 10 ? "0" + minute : minute,
-            morning = hour < 12 ? "am" : "pm";
-
-        return month + "/" + day + "/" + year + " " + hourFormatted + ":" +
-            minuteFormatted + morning;
-    }
+    
     const scrollViewRef = useRef();
+
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -165,6 +152,7 @@ const ChatRoom = ({ navigation, route }) => {
         }
         return result;
     }
+
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () =>
             scrollViewRef.current.scrollToEnd({ animated: true })
@@ -178,7 +166,9 @@ const ChatRoom = ({ navigation, route }) => {
             hideSubscription.remove();
         };
     }, []);
+
     const [isVisible, setIsVisible] = useState(false)
+    
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
 

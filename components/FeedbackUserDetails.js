@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React,{useState,useEffect} from 'react'
-import { auth, db } from '../firebase'
+import React, { useState, useEffect } from 'react'
+import { db } from '../firebase'
 
-const FeedbackUserDetails = ({id ,idUser,idStaff}) => {
+const FeedbackUserDetails = ({ id, idUser, idStaff }) => {
     const [fl, setfl] = useState('');
     const [req, setReq] = useState([]);
-    const [rating, setRating] = useState('');
     const [userName, setUserName] = useState([]);
 
     useEffect(() => {
@@ -19,19 +18,19 @@ const FeedbackUserDetails = ({id ,idUser,idStaff}) => {
             if (req[0]?.data.rating == undefined) {
                 setfl(Math.random())
             }
-          console.log('This will run after 1 second!')
+            console.log('This will run after 1 second!')
         }, 100);
         return () => clearTimeout(timer);
-      }, [fl]);
+    }, [fl]);
 
-      useEffect(() => {
+    useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
             .doc(idUser)
             .collection("myRequests")
             .onSnapshot(snapshot => {
                 setReq(
-                    snapshot.docs.filter((doc) =>doc.id == id).map((doc) => ({
+                    snapshot.docs.filter((doc) => doc.id == id).map((doc) => ({
                         id: doc.id,
                         data: doc.data()
                     })))
@@ -39,16 +38,15 @@ const FeedbackUserDetails = ({id ,idUser,idStaff}) => {
             }
 
             )
-            console.log('ceva')
-            console.log(req)
         return unsubscribe;
-    }, [db,fl])
+    }, [db, fl])
+
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
             .onSnapshot(snapshot => {
                 setUserName(
-                    snapshot.docs.filter((doc) =>doc.id == idUser).map((doc) => ({
+                    snapshot.docs.filter((doc) => doc.id == idUser).map((doc) => ({
                         id: doc.id,
                         data: doc.data()
                     })))
@@ -56,14 +54,14 @@ const FeedbackUserDetails = ({id ,idUser,idStaff}) => {
             }
             )
         return unsubscribe;
-    }, [db,fl])
+    }, [db, fl])
 
     return (
-        <View key={id} style={{shadowColor:'#202020',shadowOffset:{height:8},shadowOpacity:0.8,shadowRadius:5}}>
+        <View key={id} style={{ shadowColor: '#202020', shadowOffset: { height: 8 }, shadowOpacity: 0.8, shadowRadius: 5 }}>
             <View style={styles.container}>
                 <Image
                     style={{ alignSelf: 'center', width: 50, height: 50, marginRight: 10, borderRadius: 0 }}
-                    source={{uri:userName[0]?.data.profilePhoto ||'undefined'}}
+                    source={{ uri: userName[0]?.data.profilePhoto || 'undefined' }}
                 />
 
                 <View style={{ flex: 1 }}>
@@ -73,23 +71,23 @@ const FeedbackUserDetails = ({id ,idUser,idStaff}) => {
                 </View>
 
                 <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 1? 'orange':'black' }}
+                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 1 ? 'orange' : 'black' }}
                     source={require('../iconsOurDent/star.png')}
                 />
                 <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 2? 'orange':'black' }}
+                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 2 ? 'orange' : 'black' }}
                     source={require('../iconsOurDent/star.png')}
                 />
                 <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 3? 'orange':'black' }}
+                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 3 ? 'orange' : 'black' }}
                     source={require('../iconsOurDent/star.png')}
                 />
                 <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 4? 'orange':'black' }}
+                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 4 ? 'orange' : 'black' }}
                     source={require('../iconsOurDent/star.png')}
                 />
                 <Image
-                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 5? 'orange':'black' }}
+                    style={{ alignSelf: 'center', width: 24, height: 24, borderRadius: 50, tintColor: Math.trunc(req[0]?.data.rating) >= 5 ? 'orange' : 'black' }}
                     source={require('../iconsOurDent/star.png')}
                 />
 
@@ -106,7 +104,7 @@ const FeedbackUserDetails = ({id ,idUser,idStaff}) => {
                             fontFamily: 'Arial',
                             alignSelf: 'center',
                             fontSize: 16,
-                            flex:1
+                            flex: 1
                         }}>
                         {req[0]?.data.comment || '....'}
                     </Text>
@@ -131,8 +129,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 5,
-        borderTopWidth:3,
-        borderColor:'#202020'
+        borderTopWidth: 3,
+        borderColor: '#202020'
 
 
     },
@@ -147,7 +145,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 5,
         borderBottomRightRadius: 10,
-        marginBottom:10
+        marginBottom: 10
 
     },
     treatmName: {

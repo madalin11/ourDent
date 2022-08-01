@@ -1,12 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import Login from './Screens/Login';
 import Register from './Screens/Register';
-import AdminHome from './Screens/AdminHome';
 import TabNavigator from './Screens/TabNavigator';
 import FeedbackDetails from './Screens/FeedbackDetails';
 import StaffDetails from './Screens/StaffDetails';
@@ -15,7 +13,6 @@ import TreatmentDetails from './Screens/TreatmentDetails';
 import ChatRoom from './Screens/ChatRoom';
 import AddTreatment from './Screens/AddTreatment';
 import UserHome from './Screens/UserHome';
-import UserTreatment from './Screens/UserTreatment';
 import UserAddTreatment from './Screens/UserAddTreatment';
 import StaffHome from './Screens/StaffHome';
 import AddChat from './Screens/AddChat';
@@ -39,8 +36,8 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="User add treatment screen" component={UserAddTreatment} />
         <Stack.Screen options={{ headerShown: false }} name="Staff home screen" component={StaffHome} />
         <Stack.Screen options={{ headerShown: false }} name="Add chat" component={AddChat} />
-        
-        </Stack.Navigator>
+
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

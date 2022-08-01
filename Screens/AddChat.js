@@ -66,6 +66,7 @@ const AddChat = ({ navigation }) => {
         }
         return result;
     }
+
     async function addConversation(id) {
         await db
             .collection("peoples")
@@ -79,7 +80,7 @@ const AddChat = ({ navigation }) => {
                 uid: temp
             })
             .then(() => {
-                console.log("merge1");
+                
             })
             .catch((error) => alert(error));
 
@@ -95,7 +96,7 @@ const AddChat = ({ navigation }) => {
                 uid: temp
             })
             .then(() => {
-                console.log("merge2");
+               
             })
             .catch((error) => alert(error));
 
@@ -104,7 +105,7 @@ const AddChat = ({ navigation }) => {
         })
 
             .then(() => {
-                console.log("merge3");
+                
             }).catch((error) => alert(error));
 
         await db
@@ -116,7 +117,7 @@ const AddChat = ({ navigation }) => {
                 haveChats: true
             })
             .then(() => {
-                console.log("merge4");
+                
             })
             .catch((error) => alert(error));
         navigation.goBack()
@@ -135,7 +136,7 @@ const AddChat = ({ navigation }) => {
                 flexDirection: 'row'
             }}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={{ alignSelf: 'center',flex:1, marginLeft: 10 }}>
-                    <Image style={{ width: 20, height: 20, tintColor: 'black' }} source={require('../Icons/leftarrow.png')}></Image>
+                    <Image style={{ width: 20, height: 20, tintColor: 'black' }} source={require('../iconsOurDent/leftarrow.png')}></Image>
                 </TouchableOpacity>
                 <Text style={styles.titleTextStyle}>
                     New conversation

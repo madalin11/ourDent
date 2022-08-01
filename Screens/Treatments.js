@@ -2,16 +2,16 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image,
 import React, { useEffect, useState } from 'react'
 import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 
 const Treatments = ({ navigation }) => {
     const [treatments, setTreatments] = useState([]);
     const [searchText, setSearchText] = useState('');
-    const enterTreatmentDetails = (name, id, imageLink, price,description) => {
+    const enterTreatmentDetails = (name, id, imageLink, price, description) => {
         navigation.navigate('Treatment details screen', {
             id: id,
             name: name,
-            description:description,
+            description: description,
             imageLink: imageLink,
             price: price
         });
@@ -109,10 +109,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignContent: 'center',
-        //alignItems: 'center',
-
-
-
     },
     headerTextStyle: {
         color: 'white',

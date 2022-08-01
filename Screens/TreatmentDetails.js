@@ -1,7 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
-import { auth, db } from '../firebase'
+import { db } from '../firebase'
 
 const TreatmentDetails = ({ navigation, route }) => {
     const scrollViewRef = useRef();
@@ -20,11 +20,11 @@ const TreatmentDetails = ({ navigation, route }) => {
         await db.collection("treatments").doc(id).update({
             name: name,
             description: description,
-            imageLink:imageLink,
-            price:price
+            imageLink: imageLink,
+            price: price
 
         })
-        
+
         navigation.goBack();
     }
     return (
@@ -48,7 +48,7 @@ const TreatmentDetails = ({ navigation, route }) => {
                     <TouchableOpacity style={{ marginTop: 60, marginLeft: 15, marginRight: -15 }} onPress={() => navigation.navigate('Tab navigator screen')}>
                         <Image
                             style={{ alignSelf: 'flex-start', width: 22, height: 22 }}
-                            source={require('../Icons/leftarrow.png')} />
+                            source={require('../iconsOurDent/leftarrow.png')} />
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 10, marginBottom: 40, alignItems: 'center', alignSelf: 'center' }}>
@@ -126,7 +126,7 @@ const TreatmentDetails = ({ navigation, route }) => {
                         alignSelf: 'center',
                         marginTop: 200
                     }}>
-                        <TouchableOpacity onPress={()=>updateTreatment(route?.params.id)} >
+                        <TouchableOpacity onPress={() => updateTreatment(route?.params.id)} >
                             <View style={{
                                 backgroundColor: 'rgba(255, 255, 255, 0.5)', padding: 10, paddingHorizontal: 40, marginHorizontal: 50, borderRadius: 10, shadowColor: '#202020',
                                 shadowRadius: 10,

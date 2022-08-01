@@ -1,35 +1,11 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Keyboard, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import StaffItem from '../components/FeedbackItem';
 import { LinearGradient } from 'expo-linear-gradient';
-import FeedbackItem from '../components/FeedbackItem';
 import FeedbackUserDetails from '../components/FeedbackUserDetails';
-import { auth, db } from '../firebase';
+import { db } from '../firebase';
 
 const FeedbackDetails = ({ navigation, route }) => {
   const [ratings, setRatings] = useState([]);
-  const [searchText, setSearchText] = useState('')
-  const [people, setPeople] = useState([])
-
-  function filterZZZ(friend) {
-    try {
-      if (friend.data.name == '') {
-        return true;
-      }
-      try {
-
-        if (friend.data.name.toLowerCase().includes(textSearch.toLowerCase()))
-          return true;
-
-      } catch (err) {
-
-      }
-      return false
-    } catch (err) {
-
-    }
-    return true
-  }
 
   useEffect(() => {
     const unsubscribe = db
@@ -61,7 +37,7 @@ const FeedbackDetails = ({ navigation, route }) => {
         <TouchableOpacity style={{ marginTop: 60, marginLeft: 15, marginRight: -15 }} onPress={() => navigation.navigate('Tab navigator screen')}>
           <Image
             style={{ alignSelf: 'flex-start', width: 22, height: 22 }}
-            source={require('../Icons/leftarrow.png')} />
+            source={require('../iconsOurDent/leftarrow.png')} />
         </TouchableOpacity>
       </View>
       <View style={{ marginBottom: 20, marginTop: 10, alignSelf: 'center' }}>
@@ -69,12 +45,12 @@ const FeedbackDetails = ({ navigation, route }) => {
           All feedbacks
         </Text>
       </View>
-      
+
       <ScrollView style={{ height: '100%' }}>
 
         {
           ratings.map(({ id, data }) => (
-            <FeedbackUserDetails 
+            <FeedbackUserDetails
               key={id}
               id={id}
               idUser={data.idUser}
@@ -93,10 +69,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
-    //alignItems: 'center',
-
-
-
   },
   headerTextStyle: {
     color: 'white',
