@@ -2,11 +2,15 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { db } from '../firebase'
 
+
+//componenta de feedback 
 const FeedbackUserDetails = ({ id, idUser, idStaff }) => {
     const [fl, setfl] = useState('');
     const [req, setReq] = useState([]);
     const [userName, setUserName] = useState([]);
 
+
+    //extragere din db a feedbackului
     useEffect(() => {
         if (req[0]?.data.rating == undefined) {
             setfl(Math.random())
@@ -56,6 +60,8 @@ const FeedbackUserDetails = ({ id, idUser, idStaff }) => {
         return unsubscribe;
     }, [db, fl])
 
+
+    //strutura componentei
     return (
         <View key={id} style={{ shadowColor: '#202020', shadowOffset: { height: 8 }, shadowOpacity: 0.8, shadowRadius: 5 }}>
             <View style={styles.container}>
@@ -118,6 +124,8 @@ const FeedbackUserDetails = ({ id, idUser, idStaff }) => {
 
 export default FeedbackUserDetails
 
+
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

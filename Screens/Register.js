@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {auth,db} from '../firebase';
 import { StyleSheet, Text, TextInput, Image, View, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
 
-
+//ecranul de creare de cont
 const Register = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,6 +15,8 @@ const Register = ({ navigation }) => {
     const [memberID, setMemberID] = useState('');
     const [flagReg, setflagReg] = useState('')
 
+
+    //functia ce realizeaza validarea datelor introduse de user la creare cont
     function checkTextInput() {
         if (!firstName.trim()) {
             alert('Please Enter First Name');
@@ -45,6 +47,7 @@ const Register = ({ navigation }) => {
         return true;
     };
 
+    //functia ce adauga in baza de date a unui nou utilizator/staff/admin
     async function createPeople(temp, name, photo) {
         await db.collection("peoples").doc(temp).set({
             email:email,
@@ -58,6 +61,8 @@ const Register = ({ navigation }) => {
             console.log("User successfuly added");
         }).catch((error) => alert(error));
     }
+
+    //logarea in aplicatie
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
@@ -101,7 +106,10 @@ const Register = ({ navigation }) => {
         
     }
 
+
   return (
+
+    //structurarea aplicatiei si functionalitatile ei
     <KeyboardAvoidingView
             style={styles.container}
 
@@ -211,6 +219,7 @@ const Register = ({ navigation }) => {
 
 export default Register
 
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
     input: {
         backgroundColor: 'white',

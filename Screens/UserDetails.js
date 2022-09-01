@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase';
 
+
+//ecranul ce cuprinde dtalii despre un anume utilizator
 const UserDetails = ({ navigation, route }) => {
     const scrollViewRef = useRef();
 
@@ -11,14 +13,14 @@ const UserDetails = ({ navigation, route }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [profilePhoto, setProfilePhoto] = useState('')
 
-
+//functia de stergere user
     function deleteUser(id) {
         db.collection("peoples").doc(id).delete().then(() => {
             console.log("Staff successfuly deleted");
         }).catch((error) => alert(error));
         navigation.goBack();
     }
-
+//functia de modificare user
     async function updateUser(id) {
         await db.collection("peoples").doc(id).update({
             name: firstName + ' ' + lastName,
@@ -29,6 +31,8 @@ const UserDetails = ({ navigation, route }) => {
         navigation.goBack();
     }
     return (
+
+        //strutura ecranului
         <KeyboardAvoidingView
             style={styles.container}
 
@@ -161,7 +165,7 @@ const UserDetails = ({ navigation, route }) => {
 }
 
 export default UserDetails
-
+//stilizarea ecranului
 const styles = StyleSheet.create({
     container: {
         flex: 1,

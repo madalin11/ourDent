@@ -3,11 +3,14 @@ import { StyleSheet } from 'react-native'
 import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
+
+//componenta de chat ce cuprinde detalii despre un chat item
 const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
 
     const [messages1, setMessages1] = useState('');
     const temp = auth.currentUser.uid;
     
+    //extragere din db a mesajelor unui anumit user cu un doctor
     useEffect(() => {
         const unsubscribe = db.collection("peoples").doc(temp).collection("doctors").doc(id).collection("messages").onSnapshot((snapshot) => setMessages1(
             snapshot.docs.map(doc => ({
@@ -22,6 +25,8 @@ const ChatListItem = ({ enterChat, id, friendPhoto, friendName }) => {
     }, [])
 
     return (
+
+        //struturarea ecranului
         <ListItem containerStyle={{
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             borderRadius: 10,

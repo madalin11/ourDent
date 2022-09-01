@@ -3,13 +3,21 @@ import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase'
 
+
+//ecranul de adaugare tratament nou
 const AddTreatment = ({ navigation }) => {
+
+    //constanta ce pointeaza spre componenta de scroll view
     const scrollViewRef = useRef();
+    //constante ce realizeaza memorarea si setarea ( use state)
+    //a numelui , descrierii , pretului si linkul imaginii pentru tratament
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [linkImage, setLinkImage] = useState('')
 
+
+    //functia de adaugarea tratament ce realieaza memorarea in baza de date 
     async function addTreatment(id) {
         await db.collection("treatments").doc(makeid(10)).set({
             name: name,
@@ -25,6 +33,8 @@ const AddTreatment = ({ navigation }) => {
         navigation.goBack();
     }
     
+
+    //functia de creare id 
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -36,6 +46,8 @@ const AddTreatment = ({ navigation }) => {
         return result;
     }
     return (
+        //structurarea ecranului impreuna cu apelarea functiilor specifice pentru 
+        //functionalitate
         <KeyboardAvoidingView
             style={styles.container}
 
@@ -166,6 +178,8 @@ const AddTreatment = ({ navigation }) => {
 
 export default AddTreatment
 
+
+//stilizarea ecranului de adaugare tratament
 const styles = StyleSheet.create({
     container: {
         flex: 1,

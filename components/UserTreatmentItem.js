@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-
+//componenta de treatment ce apare pentru user
 const UserTreatmentItem = ({ enterTreatmentDetails, name, description, imageLink, id, price }) => {
     return (
+        //structura componentei
         <TouchableOpacity onPress={() => enterTreatmentDetails(name, description, imageLink, id, price)}>
             <View style={styles.container}>
                 <Image
@@ -30,6 +31,7 @@ const UserTreatmentItem = ({ enterTreatmentDetails, name, description, imageLink
 
 export default UserTreatmentItem
 
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

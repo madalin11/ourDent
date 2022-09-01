@@ -17,12 +17,17 @@ import UserAddTreatment from './Screens/UserAddTreatment';
 import StaffHome from './Screens/StaffHome';
 import AddChat from './Screens/AddChat';
 
+
+//la nivel structural aplicatia este constituita dintr-un stack navigator ce cuprinde 
+//toate ecranele aplicatiei aranjate sub forma unei stive. De asemenea stiva cuprinde, pe langa ecrane simple, si 
+//o structura tab navigator care la randul ei contine structurat alte ecrane cuprinse in aplicatie
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+    //crearea containerului ce contine ecranele impreuna cu stilizarea lui si adagarea pe rand a tab navigatorului si a restul 
+    //ecranelor
     <NavigationContainer backgroundColor={'red'}>
       <Stack.Navigator>
-
         <Stack.Screen options={{ headerShown: false }} name="Login screen" component={Login} />
         <Stack.Screen options={{ headerShown: false }} name="Register screen" component={Register} />
         <Stack.Screen options={{ headerShown: false }} name="Tab navigator screen" component={TabNavigator} />
@@ -42,6 +47,8 @@ export default function App() {
   );
 }
 
+
+//functia ce realizeaza stilizarea eplicatiei pentru container
 const styles = StyleSheet.create({
   container: {
     flex: 1,

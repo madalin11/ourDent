@@ -3,6 +3,9 @@ import React, { useRef, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase'
 
+
+
+//ecranul ce contine detalii despre un tratament
 const TreatmentDetails = ({ navigation, route }) => {
     const scrollViewRef = useRef();
     const [name, setName] = useState('');
@@ -10,12 +13,15 @@ const TreatmentDetails = ({ navigation, route }) => {
     const [price, setPrice] = useState(0);
     const [imageLink, setImageLink] = useState('')
 
+    //functia de stergere din db a unui tratament
     function deleteTreatment(id) {
         db.collection("treatments").doc(id).delete().then(() => {
             console.log("Treatment successfuly deleted");
         }).catch((error) => alert(error));
         navigation.goBack();
     }
+
+    //functia de modificare a unui tratament in db
     async function updateTreatment(id) {
         await db.collection("treatments").doc(id).update({
             name: name,
@@ -28,6 +34,8 @@ const TreatmentDetails = ({ navigation, route }) => {
         navigation.goBack();
     }
     return (
+
+        //struturarea ecranului 
         <KeyboardAvoidingView
             style={styles.container}
 
@@ -166,7 +174,7 @@ const TreatmentDetails = ({ navigation, route }) => {
 }
 
 export default TreatmentDetails
-
+//stilizarea ecranului
 const styles = StyleSheet.create({
     container: {
         flex: 1,

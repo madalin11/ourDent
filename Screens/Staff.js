@@ -4,17 +4,21 @@ import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase'
 
+
+//ecranul ce cuprinde lista cu stafful
 const Staff = ({ navigation }) => {
     const [searchText, setSearchText] = useState('');
     const [staff, setStaff] = useState([]);
 
+
+    //functia de stergerea a unui membru staff
     function deleteStaff(id) {
         db.collection("peoples").doc(id).delete().then(() => {
             console.log("Staff successfuly deleted");
         }).catch((error) => alert(error));
         navigation.goBack();
     }
-
+//functia ce realizeaza navigarea spre ecranul ce cuprinde detalii despre fiecare membru staff
     const enterStaff = (name, id, profilePhoto, phoneNumber) => {
         navigation.navigate('Staff details screen', {
             name: name,
@@ -25,6 +29,8 @@ const Staff = ({ navigation }) => {
         });
     }
 
+
+    //extragerea din baza de date a persoanelor staff
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -43,6 +49,8 @@ const Staff = ({ navigation }) => {
         return unsubscribe;
     }, [db])
 
+
+    //functia de filtrare dupa nume e membrilor staff
     function filterZZZ(element) {
         try {
             if (element.data.name == '') {
@@ -63,6 +71,8 @@ const Staff = ({ navigation }) => {
         return true
     }
     return (
+
+        //structurarea aplicatiei si functionalitatilor ei 
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -106,6 +116,7 @@ const Staff = ({ navigation }) => {
 
 export default Staff
 
+//stilizarea eplicatiei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

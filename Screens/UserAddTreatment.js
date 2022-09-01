@@ -4,8 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import SelectDropdown from 'react-native-select-dropdown';
 import { auth, db } from '../firebase';
 
+
+//ecranul ce realizeaza crearea unei programari de catre user
 const UserAddTreatment = ({ navigation, route }) => {
-    const countries = ["Alina Popa", "Ghibu Tiberiu"];
     const [staff, setStaff] = useState([]);
     const [choosenDoctor, setChoosenDoctor] = useState('');
     const [choosenDay, setChoosenDay] = useState('');
@@ -25,7 +26,7 @@ const UserAddTreatment = ({ navigation, route }) => {
         'December']
     const year = ['2022', '2023', '2024', '2025'];
     const day = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-
+//functia de extragere a userilor din db
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -43,6 +44,7 @@ const UserAddTreatment = ({ navigation, route }) => {
 
         return unsubscribe;
     }, [db])
+    //functia de reare id unic
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -53,6 +55,8 @@ const UserAddTreatment = ({ navigation, route }) => {
         }
         return result;
     }
+
+    //functia de creare programare de catre user 
     async function createRequest(idDoctor, idTreatment, idUser, choosenDay, choosenMounth, choosenYear, name) {
         if (true) {
             let idHistT = makeid(10);
@@ -97,6 +101,8 @@ const UserAddTreatment = ({ navigation, route }) => {
 
     }
     return (
+
+        //struturarea ecranului
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -271,6 +277,7 @@ const UserAddTreatment = ({ navigation, route }) => {
 
 export default UserAddTreatment
 
+//stilizarea ecranului
 const styles = StyleSheet.create({
     container: {
         flex: 1,

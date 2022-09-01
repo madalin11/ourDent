@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import SelectDropdown from 'react-native-select-dropdown';
 import { auth, db } from '../firebase';
 
+
+//componenta ce contine detalii despre tratament
 const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, idDoctor }) => {
     const [statusColor, setStatusColor] = useState('black')
 
@@ -13,6 +15,8 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
     const [fl, setfl] = useState('');
     const [comment, setComment] = useState('')
 
+
+    //extragere din db a programarilor pentru fiecare doctor in parte
     useEffect(() => {
         if (status[0]?.data.choosenDay == undefined) {
             setfl(Math.random())
@@ -55,6 +59,8 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
         return unsubscribe;
     }, [db, dataTreatm?.imageLink,fl])
 
+
+    //functia ce realizeaza colorarea statusului programarii
     function setColors(status) {
 
         let color = 'white';
@@ -72,7 +78,7 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
     }
 
     return (
-
+//struturarea componentei
         <View key={id} style={styles.container}>
             <Image
                 style={{ alignSelf: 'center', width: 60, height: 60, marginRight: 10, borderRadius: 50 }}
@@ -134,6 +140,7 @@ const HistTreatment = ({ rating, dataTreatm, dataDoctor, id, stat, addFeedback, 
 
 export default HistTreatment
 
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

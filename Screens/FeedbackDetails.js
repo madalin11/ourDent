@@ -4,9 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackUserDetails from '../components/FeedbackUserDetails';
 import { db } from '../firebase';
 
+
+//ecranul de detalii pentru fiecare feedback general avut de un medic
 const FeedbackDetails = ({ navigation, route }) => {
   const [ratings, setRatings] = useState([]);
 
+
+
+  //extragere din baza de date a tuturor feedbackurilor oferite pentru un medic
   useEffect(() => {
     const unsubscribe = db
       .collection("peoples")
@@ -26,6 +31,8 @@ const FeedbackDetails = ({ navigation, route }) => {
     return unsubscribe;
   }, [db])
 
+
+  //struturarea ecranului si apelarea de functii specifice
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -65,6 +72,7 @@ const FeedbackDetails = ({ navigation, route }) => {
 
 export default FeedbackDetails
 
+//stilizarea eplicatiei
 const styles = StyleSheet.create({
   container: {
     flex: 1,

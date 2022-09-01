@@ -2,9 +2,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 
+
+//componenta de programare
 const Request = ({reqName,userName,id,changeStatus,day,mounth,year,imageLink,status}) => {
     
     return (
+        //strutura componentei
         <View key={id} style={{
             shadowColor: '#202020',
             shadowOffset: { height: 5 },
@@ -144,6 +147,7 @@ const Request = ({reqName,userName,id,changeStatus,day,mounth,year,imageLink,sta
 
 export default Request
 
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

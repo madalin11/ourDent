@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
+
+//componenta de staff ce contine detalii despre un naumic staff
 const StaffItem = ({enterStaff,name,id,profilePhoto,phoneNumber,deleteStaff}) => {
   return (
+
+    //strutura componentei
       <TouchableOpacity onPress={()=>enterStaff(name,id,profilePhoto,phoneNumber)}>
           <View style={styles.container}>
             <Image
@@ -30,7 +34,7 @@ const StaffItem = ({enterStaff,name,id,profilePhoto,phoneNumber,deleteStaff}) =>
 }
 
 export default StaffItem
-
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

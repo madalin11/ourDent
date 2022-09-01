@@ -4,9 +4,13 @@ import TreatmentItem from '../components/TreatmentItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase'
 
+
+//ecranul ce contine lista cu toate tratamentele prestate de cabinet
 const Treatments = ({ navigation }) => {
     const [treatments, setTreatments] = useState([]);
     const [searchText, setSearchText] = useState('');
+
+    //functia de navigare spre ecranul ce contine detalii despre un anului tratament
     const enterTreatmentDetails = (name, id, imageLink, price, description) => {
         navigation.navigate('Treatment details screen', {
             id: id,
@@ -17,6 +21,8 @@ const Treatments = ({ navigation }) => {
         });
 
     }
+
+    //functia de extragere din db a tratamentelor
     useEffect(() => {
         const unsubscribe = db
             .collection("treatments")
@@ -30,12 +36,16 @@ const Treatments = ({ navigation }) => {
 
         return unsubscribe;
     }, [db])
+
+    //functia de stergere a unui tratament 
     function deleteTreatment(id) {
         db.collection("treatments").doc(id).delete().then(() => {
             console.log("Treatment successfuly deleted");
         }).catch((error) => alert(error));
 
     }
+
+    //functia de filtrare a tratamentelor dupa nume 
     function filterZZZ(element) {
         try {
             if (element.data.name == '') {
@@ -57,7 +67,7 @@ const Treatments = ({ navigation }) => {
     }
 
     return (
-
+//struturarea ecranului
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -105,6 +115,7 @@ const Treatments = ({ navigation }) => {
 
 export default Treatments
 
+//stilizarea ecranului
 const styles = StyleSheet.create({
     container: {
         flex: 1,

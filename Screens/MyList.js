@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import HistTreatment from '../components/HistTreatment';
 import { auth, db } from '../firebase';
 
+
+//ecranul ce cuprinde istoricul programarilor unui utilizator
 const MyList = ({ navigation }) => {
     const [histTreatm, setHistTreatm] = useState([]);
     const [histTreatm2, setHistTreatm2] = useState([]);
@@ -11,6 +13,7 @@ const MyList = ({ navigation }) => {
     const temp = auth?.currentUser?.uid;
     const [searchText, setSearchText] = useState('')
 
+    //extragerea din baza de date a tuturor programarilor facute de user
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -74,7 +77,7 @@ const MyList = ({ navigation }) => {
             )
         return unsubscribe;
     }, [histTreatm])
-
+//functia de filtrare dupa nume 
     function filterZZZ(element) {
         try {
             if (element.data.name == '') {
@@ -93,7 +96,7 @@ const MyList = ({ navigation }) => {
         }
         return true
     }
-
+//functia ce adauga asincron feedback pentru o programare realizata de user
     async function addFeedback(id, feedback, comment, idDoctor, rating) {
         await db.collection("peoples").doc(temp).collection("myRequests").doc(id).update({
             rating: feedback,
@@ -109,7 +112,7 @@ const MyList = ({ navigation }) => {
         }).catch((error) => alert(error));
     }
     return (
-
+//struturarea aplicatiei si functionalitatile apelate
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -162,6 +165,7 @@ const MyList = ({ navigation }) => {
 
 export default MyList
 
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

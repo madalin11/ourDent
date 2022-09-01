@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
+
+//componente de feedback ce cuprinde detalii despre feedback si nr de stele acordate 
 const FeedbackItem = ({enterFeedback,profilePhoto,name,id,phoneNumber,rating}) => {
     return (
+
+        //structura componentei
         <TouchableOpacity key={id} onPress={()=>enterFeedback(name,id,profilePhoto,phoneNumber,rating)}>
             <View style={styles.container}>
             <Image
@@ -45,7 +49,7 @@ const FeedbackItem = ({enterFeedback,profilePhoto,name,id,phoneNumber,rating}) =
 }
 
 export default FeedbackItem
-
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

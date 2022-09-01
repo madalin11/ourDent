@@ -4,11 +4,15 @@ import StaffItem from '../components/StaffItem';
 import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase';
 
+
+//ecranul ce cuprinde lista cu toti users aplicatiei
 const Users = ({ navigation }) => {
 
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
 
+
+  //functia de stergere a unui user
   function deleteUser(id) {
     db.collection("peoples").doc(id).delete().then(() => {
       console.log("User successfuly deleted");
@@ -16,6 +20,8 @@ const Users = ({ navigation }) => {
 
   }
 
+
+  //functia de navigare spre ecranul ce cuprinde detalii despre un anumit user ales
   const enterUserDetails = (name, id, profilePhoto, phoneNumber) => {
     navigation.navigate('User details screen', {
       name: name,
@@ -26,6 +32,8 @@ const Users = ({ navigation }) => {
     });
   }
 
+
+  //functia de extragere din db a userilor
   useEffect(() => {
     const unsubscribe = db
       .collection("peoples")
@@ -44,6 +52,8 @@ const Users = ({ navigation }) => {
     return unsubscribe;
   }, [db])
 
+
+  //functia de fitrare dupa nume a userilor
   function filterZZZ(element) {
     try {
       if (element.data.name == '') {
@@ -66,6 +76,8 @@ const Users = ({ navigation }) => {
 
 
   return (
+
+    //struturarea eranului
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
@@ -109,6 +121,7 @@ const Users = ({ navigation }) => {
 
 export default Users
 
+//stilizarea ecranului
 const styles = StyleSheet.create({
   container: {
     flex: 1,

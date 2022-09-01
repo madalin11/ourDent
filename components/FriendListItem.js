@@ -4,10 +4,12 @@ import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
 
+//componenta ce contine detalii despre prieteni
 const FriendListItem = ({ friendName, id, friendPhoto, func }) => {
 
     const b = require('../iconsOurDent/newmsg.png')
 
+    //strutura componentei
     return (
         <ListItem key={id} containerStyle={{ backgroundColor: 'transparent', borderRadius: 30, marginBottom: 10, marginTop: 10 }}>
 

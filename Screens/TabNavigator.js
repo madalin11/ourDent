@@ -9,6 +9,8 @@ import Chat from './Chat';
 
 const Tab = createBottomTabNavigator();
 
+
+//tab navigatorului corespondent adminului impreuna cu toate ecranele necesare desfasurarii activitatii adminului
 const TabNavigator = ({ navigation }) => {
     return (
         <Tab.Navigator screenOptions={{ tabBarStyle: { backgroundColor: 'rgba(0, 255, 0, 0.1)' }, headerShown: false }}  >

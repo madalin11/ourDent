@@ -4,12 +4,15 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import { LinearGradient } from 'expo-linear-gradient';
 import { auth, db } from '../firebase';
 
+
+//ecranul de login ce realizeaza logarea in aplicatiei
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [memberID, setMemberID] = useState('')
     const [temp, settemp] = useState(auth?.currentUser?.uid);
 
+    //functia de extragere din db a utilizatorului curent logat
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -32,6 +35,8 @@ const Login = ({ navigation }) => {
         return unsubscribe;
     }, [temp])
 
+
+    //in functie de id ul persoanei logate se face incarcarea anumitor ecrane dupa logare
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
@@ -48,6 +53,8 @@ const Login = ({ navigation }) => {
         return unsubscribe
     }, [memberID])
 
+
+    //functia ce realizeaza logarea in auth a utilizatorului
     const handleLogin = () => {
         auth
             .signInWithEmailAndPassword(email, password)
@@ -60,6 +67,8 @@ const Login = ({ navigation }) => {
             .catch(error => alert(error.message))
     }
     return (
+
+        //strutura ecranului impreuna cu functionalitatile apelate
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView
                 style={styles.container}
@@ -125,6 +134,7 @@ const Login = ({ navigation }) => {
 
 export default Login
 
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

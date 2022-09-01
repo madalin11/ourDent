@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
+
+//componente de treatment ce contine detalii despre un anumit tratament
 const TreatmentItem = ({  enterTreatmentDetails, name, id, imageLink,deleteTreatm,price,description }) => {
     return (
+
+        //strutura componentei si functionalitatile ei 
         <TouchableOpacity key={id} onPress={() => enterTreatmentDetails(name,id,imageLink,price,description)}>
             <View style={styles.container}>
                 <Image
@@ -31,6 +35,8 @@ const TreatmentItem = ({  enterTreatmentDetails, name, id, imageLink,deleteTreat
 
 export default TreatmentItem
 
+
+//stilizarea componentei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -6,6 +6,8 @@ import StaffRequests from './StaffRequests';
 
 const Tab = createBottomTabNavigator();
 
+
+//tabnavigatorul pentru staff ce cuprinde ecranele aferente impreuna cu stilizarea lor
 const StaffHome = ({ navigation }) => {
     return (
         <Tab.Navigator screenOptions={{ tabBarStyle: { backgroundColor: 'rgba(0, 255, 0, 0.1)' }, headerShown: false }}  >

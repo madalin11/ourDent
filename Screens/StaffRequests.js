@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Request from '../components/Request';
 import { auth, db } from '../firebase';
 
+
+//ecranul corespunzator staffului ce cuprinde toate programarile initiate de useri
 const StaffRequests = ({ navigation }) => {
     const temp = auth?.currentUser?.uid;
     const [requests, setRequests] = useState([])
@@ -12,6 +14,7 @@ const StaffRequests = ({ navigation }) => {
     const [treatments, setTreatments] = useState([])
 
 
+    //functia de schimbarea a statusului unei programri
     async function changeStatus(id, state) {
 
         await db.collection("peoples").doc(temp).collection("requests").doc(id).update({
@@ -19,6 +22,8 @@ const StaffRequests = ({ navigation }) => {
 
         })
     }
+
+    //functia de filtrare dupa nume a tuturor programarilor
     function filterZZZ(element) {
         try {
             if (element.data.name == '') {
@@ -38,6 +43,8 @@ const StaffRequests = ({ navigation }) => {
         }
         return true
     }
+
+    //extragere din db a tuturor programarilor
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -70,6 +77,8 @@ const StaffRequests = ({ navigation }) => {
             )
         return unsubscribe;
     }, [db])
+
+    //extragere din db a tuturor tratamentelor
     useEffect(() => {
         const unsubscribe = db
             .collection("treatments")
@@ -86,8 +95,10 @@ const StaffRequests = ({ navigation }) => {
      
         return unsubscribe;
     }, [db])
-    return (
 
+    
+    return (
+//struturarea aplicatiei si a functionalitatilor ei 
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -140,7 +151,7 @@ const StaffRequests = ({ navigation }) => {
 }
 
 export default StaffRequests
-
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
     container: {
         flex: 1,

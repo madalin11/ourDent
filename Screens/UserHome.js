@@ -7,6 +7,8 @@ import MyList from './MyList';
 
 const Tab = createBottomTabNavigator();
 
+
+//tab navigatorul corespunzator userului ce contine ecranele necesare acestuia pentru realizarea actiunilor specifice
 const UserHome = ({ navigation }) => {
     return (
         <Tab.Navigator screenOptions={{ tabBarStyle: { backgroundColor: 'rgba(0, 255, 0, 0.1)' }, headerShown: false }}  >

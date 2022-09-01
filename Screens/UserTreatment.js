@@ -4,11 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import UserTreatmentItem from '../components/UserTreatmentItem';
 import { db } from '../firebase';
 
+
+//ecranul de tratamente 
 const UserTreatment = ({ navigation }) => {
 
     const [treatments, setTreatments] = useState([]);
     const [searchText, setSearchText] = useState('');
 
+    //functia de navigare spre ecranul ce cuprinde detalii despre tratament
     const enterTreatmentDetails = (name, description, imageLink, id, price) => {
         navigation.navigate('User add treatment screen', {
             id: id,
@@ -19,6 +22,8 @@ const UserTreatment = ({ navigation }) => {
         });
 
     }
+
+    //ectragerea din db a tratamentelor
     useEffect(() => {
         const unsubscribe = db
             .collection("treatments")
@@ -32,6 +37,8 @@ const UserTreatment = ({ navigation }) => {
 
         return unsubscribe;
     }, [db])
+
+    //filtrarea dupa nume a tratamentelor
     function filterZZZ(element) {
         try {
             if (element.data.name == '') {
@@ -52,7 +59,7 @@ const UserTreatment = ({ navigation }) => {
         return true
     }
     return (
-
+//struturarea ecranului
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -98,7 +105,7 @@ const UserTreatment = ({ navigation }) => {
 }
 
 export default UserTreatment
-
+//stilizarea ecranului
 const styles = StyleSheet.create({
     container: {
         flex: 1,

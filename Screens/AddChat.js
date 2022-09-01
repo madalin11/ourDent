@@ -5,8 +5,11 @@ import FriendListItem from '../components/FriendListItem';
 import firebase from 'firebase/compat/app';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const AddChat = ({ navigation }) => {
+//ecranul de adaugare chat nou 
 
+const AddChat = ({ navigation }) => {
+//modificare atribute ecran folosind useLayoutEffect ce este activat
+//in momentul in care au loc modificari pe navigation
     useLayoutEffect(() => {
         navigation.setOptions({
             title: 'Add friend',
@@ -14,10 +17,16 @@ const AddChat = ({ navigation }) => {
         })
 
     }, [navigation])
+
+    //salvarea in const tmp a uid-ului corespunzator utilizatorului curent logat
     const temp = auth.currentUser.uid;
+
+
+    //variabila de stare ce memoreaza si seteaza datele despre 
+    //prietenii unui utilizator
     const [friends, setFriends] = useState([]);
 
-
+//functia de filtrare a prietenilor dupa nume
     function filterZZZ(friend) {
         try {
             if (friend.data.name == '') {
@@ -37,8 +46,14 @@ const AddChat = ({ navigation }) => {
         }
         return true
     }
+
+    //variabila de stare ce memoreaza si seteaza datele despre 
+    //testul introdus in casuta de search din ecranul aplicatiei
     const [textSearch, setSearchText] = useState('')
     
+
+    //functia ce realizeaza extragerea din baza de date a prietenilor
+    //unui utilizator
     useEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -49,13 +64,14 @@ const AddChat = ({ navigation }) => {
                         id: doc.id,
                         data: doc.data()
                     })))
-                // setSearchabelFriends(friendsToAdd);
             }
 
             )
 
         return unsubscribe;
     }, [])
+
+    //functia ce creeaza id unic 
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -67,6 +83,7 @@ const AddChat = ({ navigation }) => {
         return result;
     }
 
+    //functia asincrona ce realizeaza crearea unei conversatii noi in baza de date 
     async function addConversation(id) {
         await db
             .collection("peoples")
@@ -123,6 +140,7 @@ const AddChat = ({ navigation }) => {
         navigation.goBack()
     }
     return (
+        //structurarea aplicatiei impreuna cu apelarea functiilor
         <View style={styles.container}>
             <LinearGradient
                 // Background Linear Gradient
@@ -175,6 +193,7 @@ const AddChat = ({ navigation }) => {
 
 export default AddChat
 
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
     button: {
         // width: '100%',

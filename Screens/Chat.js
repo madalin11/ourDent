@@ -5,12 +5,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { auth, db } from '../firebase';
 import ChatListItem from '../components/ChatListItem';
 
-const Chat = ({ navigation }) => {
 
+//ecranul de chat unde sunt cuprinse toate conversatiile realizate
+//de utilizator
+const Chat = ({ navigation }) => {
+//constante pentru setare si memorarea text necesar cautarii dupa nume a conversatiilor,
+//prietenii , utilizatorul curent
   const [textSearch, setTextSearch] = useState('')
   const [friends, setFriends] = useState([])
   const temp = auth.currentUser.uid;
   const [friendsAdd, setFriendsAdd] = useState([])
+
+
   //check what kind of user is and set corespondent flag
   const enterChat = (id, friendName, friendPhoto) => {
     navigation.navigate('Chat room screen', {
@@ -19,6 +25,8 @@ const Chat = ({ navigation }) => {
       friendPhoto: friendPhoto
     });
   }
+
+  //functia ce realizeaza delogarea userului din aplicatie
   const handleSignOut = () => {
     auth
       .signOut()
@@ -30,6 +38,8 @@ const Chat = ({ navigation }) => {
       })
       .catch(error => alert(error.message))
   }
+
+  //functia ce extrage doctorii cu care are conversatii din baza de date 
   useEffect(() => {
     const unsubscribe = db
       .collection("peoples")
@@ -47,6 +57,8 @@ const Chat = ({ navigation }) => {
     return unsubscribe;
   }, [navigation])
 
+
+  //functia ce extrage si filtreaza doctorii din db care sunt prieteni cu userul
   useEffect(() => {
     const unsubscribe = db
       .collection("peoples")
@@ -64,7 +76,6 @@ const Chat = ({ navigation }) => {
             id: doc.id,
             data: doc.data()
           })))
-        // setSearchabelFriends(friendsToAdd);
       }
 
       )
@@ -72,6 +83,7 @@ const Chat = ({ navigation }) => {
     return unsubscribe;
   }, [friends])
 
+  //functia de filtrare dupa nume 
   function filterZZZ(friend) {
     try {
       if (friend.data.name == '') {
@@ -92,6 +104,7 @@ const Chat = ({ navigation }) => {
     return true
   }
   return (
+    //struturarea aplicatie impreuna cu apelarea functiilor pentru functionalitati specifice
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
@@ -147,15 +160,13 @@ const Chat = ({ navigation }) => {
 
 export default Chat
 
+
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    // //alignItems: 'center',
     alignContent: 'center',
-    // backgroundColor: '#ADD8E6',
-
-
   },
   background: {
     position: 'absolute',

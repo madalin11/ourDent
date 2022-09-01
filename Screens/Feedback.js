@@ -4,10 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import FeedbackItem from '../components/FeedbackItem';
 import { db } from '../firebase';
 
+
+//ecranul ce cuprinde lista cu feedback pentru doctori
 const Feedback = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [feedback, setFeedback] = useState([]);
 
+
+//functia ce realizeaza navigarea spre detalii cu privire la un feedback anume
   const enterFeedback = (name, id, profilePhoto, phoneNumber, rating) => {
     navigation.navigate('Feedback details screen', {
       name: name,
@@ -18,6 +22,8 @@ const Feedback = ({ navigation }) => {
     });
   }
 
+
+  //functia ce realizeaza citirea din baza de date a tuturor utilizatorilor
   useEffect(() => {
     const unsubscribe = db
       .collection("peoples")
@@ -35,6 +41,8 @@ const Feedback = ({ navigation }) => {
     return unsubscribe;
   }, [db])
 
+
+  //functia de filtrare dupa nume 
   function filterZZZ(element) {
     try {
       if (element.data.name == '') {
@@ -57,6 +65,8 @@ const Feedback = ({ navigation }) => {
 
 
   return (
+
+    //structurarea ecranului impreuna cu functionalitatile apelate
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
@@ -97,6 +107,8 @@ const Feedback = ({ navigation }) => {
 
 export default Feedback
 
+
+//stilizarea aplicatiei
 const styles = StyleSheet.create({
   container: {
     flex: 1,

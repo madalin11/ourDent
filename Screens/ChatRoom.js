@@ -7,12 +7,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { ListItem, Avatar } from 'react-native-elements'
 import { db, auth } from '../firebase'
 
+
+//ecranul ce cuprinde conversatia cu un anumit doctor
 const ChatRoom = ({ navigation, route }) => {
     const temp = auth.currentUser.uid;
     const current = route.params.id;
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState([])
 
+
+    //stilizarea ecranului cu poza si numele persoani cu care 
+    //este deschisa conversatia
     useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: () => (
@@ -42,7 +47,7 @@ const ChatRoom = ({ navigation, route }) => {
         })
 
     }, [navigation, route])
-
+//functia de creare id unic
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -54,6 +59,7 @@ const ChatRoom = ({ navigation, route }) => {
         return result;
     }
 
+    //extragearea din baza de date a tuturor mesajelor cu persoana de contact
     useLayoutEffect(() => {
         const unsubscribe = db
             .collection("peoples")
@@ -70,6 +76,9 @@ const ChatRoom = ({ navigation, route }) => {
         return unsubscribe;
     }, [route, navigation])
     
+
+    //functia asincrona ce realizeaza inregistrarea in baza de date
+    //a unui nou mesaj trimis de utilizator
     async function sendMessage(id) {
         if (checkTextInput()) {
             await db
@@ -141,7 +150,7 @@ const ChatRoom = ({ navigation, route }) => {
     }
     
     const scrollViewRef = useRef();
-
+//functia de creare id unic
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -153,6 +162,7 @@ const ChatRoom = ({ navigation, route }) => {
         return result;
     }
 
+    //functia ce realizeaza scroll down in momentul in care se inchide sau deschide tastatura telefonului
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () =>
             scrollViewRef.current.scrollToEnd({ animated: true })
@@ -168,7 +178,7 @@ const ChatRoom = ({ navigation, route }) => {
     }, []);
 
     const [isVisible, setIsVisible] = useState(false)
-    
+    //struturarea ecranului impreuna cu adaugarea de functionalitati prin apelare functii
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
 
@@ -295,7 +305,7 @@ const ChatRoom = ({ navigation, route }) => {
 }
 
 export default ChatRoom
-
+//stilizarea ecranului
 const styles = StyleSheet.create({
     container: {
         flex: 1,
